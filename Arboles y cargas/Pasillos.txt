@@ -1,0 +1,5 @@
+01;Abarrotes
+20;Limpieza
+15;Bebidas
+4;Carnes
+15;Licor
