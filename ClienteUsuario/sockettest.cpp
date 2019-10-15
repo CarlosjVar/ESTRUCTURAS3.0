@@ -65,7 +65,7 @@ void SocketTest::readyRead()
      {
          if(data.toStdString().substr(2,2)=="PA")
          {
-             paInv=true;
+             paInv=false;
              std::string datos=data.toStdString();
              char separador[]=";";
              char cstr[datos.size()+1];
@@ -77,7 +77,7 @@ void SocketTest::readyRead()
          }
          else if(data.toStdString().substr(2,2)=="PR")
          {
-             paInv=true;
+             paInv=false;
              std::string datos=data.toStdString();
              char separador[]=";";
              char cstr[datos.size()+1];
@@ -89,7 +89,7 @@ void SocketTest::readyRead()
          }
         else if(data.toStdString().substr(2,2)=="MA")
          {
-             proInv=true;
+             proInv=false;
              std::string datos=data.toStdString();
              char separador[]=";";
              char cstr[datos.size()+1];

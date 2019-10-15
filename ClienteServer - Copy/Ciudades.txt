@@ -1,4 +1,0 @@
-11;Panama
-20;España
-15;Barcelona
-4;Mexico
