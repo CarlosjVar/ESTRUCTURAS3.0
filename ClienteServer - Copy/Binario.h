@@ -18,7 +18,6 @@ public:
     void InsertaNodo(int num, string nombre);
     void PreordenI();
     void InordenI();
-    string InordenCliente();
     void PostordenI();
     void PostordenG(pNodoBinario pRaiz);
     void cargarPasillos (string pNombreArchivo);

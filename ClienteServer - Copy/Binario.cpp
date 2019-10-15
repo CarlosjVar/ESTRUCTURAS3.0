@@ -301,6 +301,7 @@ void BinarioAVL::Equilibrar2(NodoBinarioAVL* n, bool Hh){
         }
     }
 }
+
 void BinarioAVL::InsertarBalanceado(pNodoBinarioAVL &ra, bool &Hh, int x, string nombre){
     pNodoBinarioAVL n1;
     if(ra==NULL){

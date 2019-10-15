@@ -14,8 +14,6 @@ public:
     void run() override;
     bool LoginV();
     std::string pedirDato();
-    void menu();
-    void comprar();
 signals:
     void WriteByte(QByteArray data);
     void waitResponse(int q);

@@ -38,7 +38,7 @@ void SocketTest::WriteByte(QByteArray data)
 }
 void SocketTest::readyRead()
 {
-     QByteArray data=socket->readLine();
+     QByteArray data=socket->readAll();
      if(data.toStdString().substr(0,2)=="LO")
      {
          if(data.toStdString().substr(2,1)=="S")
@@ -61,6 +61,59 @@ void SocketTest::readyRead()
              qDebug()<<"Esta cédula ya existe en el sistemas";
          }
      }
+    else if(data.toStdString().substr(0,2)=="CO")
+     {
+         if(data.toStdString().substr(2,2)=="PA")
+         {
+             paInv=true;
+             std::string datos=data.toStdString();
+             char separador[]=";";
+             char cstr[datos.size()+1];
+             strcpy(cstr,datos.c_str());
+             char*token= strtok(cstr,separador);
+             token=strtok(nullptr,separador);
+             std::string arbolbin=token;
+             std::cout<<arbolbin<<std::endl;
+         }
+         else if(data.toStdString().substr(2,2)=="PR")
+         {
+             paInv=true;
+             std::string datos=data.toStdString();
+             char separador[]=";";
+             char cstr[datos.size()+1];
+             strcpy(cstr,datos.c_str());
+             char*token= strtok(cstr,separador);
+             token=strtok(nullptr,separador);
+             std::string arbolbin=token;
+             std::cout<<arbolbin<<std::endl;
+         }
+        else if(data.toStdString().substr(2,2)=="MA")
+         {
+             proInv=true;
+             std::string datos=data.toStdString();
+             char separador[]=";";
+             char cstr[datos.size()+1];
+             strcpy(cstr,datos.c_str());
+             char*token= strtok(cstr,separador);
+             token=strtok(nullptr,separador);
+             std::string arbolbin=token;
+             std::cout<<arbolbin<<std::endl;
+         }
+     }
+    else if(data.toStdString().substr(0,2)=="VA")
+     {
+         if(data.toStdString().substr(2,2)=="PA")
+         {
+             std::cout<<"Pasillo invalido"<<std::endl;
+             this->paInv=true;
+         }
+         else if(data.toStdString().substr(2,2)=="PR")
+         {
+
+            std::cout<<"Producto invalido"<<std::endl;
+            this->proInv=true;
+         }
+     }
 }
 void SocketTest::waitResponse(int q)
 {
@@ -69,4 +122,12 @@ void SocketTest::waitResponse(int q)
 bool SocketTest::getestado()
 {
     return this->conectado;
+}
+bool SocketTest::getpa()
+{
+    return this->paInv;
+}
+bool SocketTest::getpro()
+{
+    return this->proInv;
 }

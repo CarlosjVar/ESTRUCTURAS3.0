@@ -25,13 +25,9 @@ public slots:
     void WriteByte(QByteArray data);
     void waitResponse(int q);
     bool getestado();
-    bool getpa();
-    bool getpro();
 private:
     QTcpSocket *socket;
     bool conectado;
-    bool paInv=false;
-    bool proInv=false;
 friend class Thread;
 };
 

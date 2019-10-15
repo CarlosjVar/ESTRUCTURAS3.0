@@ -8,7 +8,7 @@
 #include <QThreadPool>
 #include "B.h"
 #include "Globales.h"
-#include <iostream>
+
 class Mycliente: public QObject
 {
     Q_OBJECT
@@ -17,10 +17,6 @@ public:
    void SetSocket(qintptr Desc);
    void conectadoE(QByteArray data);
    void registrarCliente(QByteArray data);
-   void setCedula(int cedula);
-   string inordenMandar(pNodoBinario nodo);
-   string inordenMandarP(pNodoBinarioAVL nodo);
-   string inordenMandarM(NodePtr nodo);
 signals:
 
 public slots:
@@ -30,8 +26,6 @@ public slots:
    void write(QByteArray Data);
 private:
     QTcpSocket*socket;
-    QThreadPool*pool;
-    int cedula;
 };
 
 #endif // MYCLIENTE_H

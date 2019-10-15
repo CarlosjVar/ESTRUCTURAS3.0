@@ -30,9 +30,75 @@ void Mycliente::readyRead()
     }
     else if(data.toStdString().substr(0,2)=="RE")
     {
-        cout<<"hola"<<endl;
         registrarCliente(data);
+    }
+    else if(data.toStdString().substr(0,2)=="CO")
+    {
+        if(data.toStdString().substr(2,2)=="PA")
+        {
+        string send="COPA;";
+        string arbol;
+        arbol=inordenMandar(supermercado.raiz);
+        send.append(arbol);
+        this->write(QByteArray::fromStdString(send));
+        }
+        else if(data.toStdString().substr(2,2)=="PR")
+        {
+            string datos=data.toStdString();
+            char separador[]=";";
+            char cstr[datos.size()+1];
+            strcpy(cstr,datos.c_str());
+            char*token= strtok(cstr,separador);
+            token=strtok(nullptr,separador);
+            string pasillo=token;
+            int pasilloi=std::stoi(pasillo);
+            pNodoBinario raiz=supermercado.raiz;
+            pNodoBinario pasillop=buscarNodo(raiz,pasilloi);
+            if(pasillop!=nullptr)
+            {
+                string send="COPR;";
+                string arbol;
+                arbol=inordenMandarP(pasillop->productos);
+                send.append(arbol);
+                this->write(QByteArray::fromStdString(send));
+            }
+            else
+            {
+                QByteArray validacion="VAPA";
+                this->write(validacion);
+            }
 
+        }
+        else if(data.toStdString().substr(2,2)=="MA")
+        {
+            string datos=data.toStdString();
+            char separador[]=";";
+            char cstr[datos.size()+1];
+            strcpy(cstr,datos.c_str());
+            char*token= strtok(cstr,separador);
+            token=strtok(nullptr,separador);
+            string producto=token;
+            int pasillo=stoi(token);
+            token=strtok(nullptr,separador);
+            int productoi=stoi(token);
+            pNodoBinario raiz=supermercado.raiz;
+            pNodoBinario pasillon=buscarNodo(raiz,pasillo);
+            pNodoBinarioAVL producton=buscarNodoAVL(pasillon->productos,productoi);
+            if (producton!=nullptr)
+            {
+            string send="COMA;";
+            string arbol=inordenMandarM(producton->marcas);
+            send.append(arbol);
+            this->write(QByteArray::fromStdString(send));
+            }
+            else
+            {
+                QByteArray validacion="VAPR";
+                this->write(validacion);
+            }
+
+
+        }
     }
 }
 
@@ -80,13 +146,59 @@ void Mycliente::registrarCliente(QByteArray data)
     if (aux == NULL){
         clientes.insertar(cedulaS,nombre,numero,ciudad,correo);
         socket->write("RGY");
+        setCedula(cedulaS);
     }
     else
     {
         socket->write("RGN");
     }
-
-
-
-
+}
+void Mycliente::setCedula(int cedula)
+{
+    this->cedula=cedula;
+}
+string Mycliente::inordenMandar(pNodoBinario nodo)
+{
+    if(nodo==NULL){
+            return "";
+    }else
+    {   string aux;
+        aux.append(nodo->nombre);
+        aux.append(" ");
+        aux.append(std::to_string(nodo->valor));
+        aux.append("\n");
+        aux+=inordenMandar(nodo->Hizq);
+        aux+=inordenMandar(nodo->Hder);
+        return aux;
+    }
+}
+string Mycliente::inordenMandarP(pNodoBinarioAVL nodo)
+{
+    if(nodo==NULL){
+            return "";
+    }else
+    {   string aux;
+        aux.append(nodo->nombre);
+        aux.append(" ");
+        aux.append(std::to_string(nodo->valor));
+        aux.append("\n");
+        aux+=inordenMandarP(nodo->Hizq);
+        aux+=inordenMandarP(nodo->Hder);
+        return aux;
+    }
+}
+string Mycliente::inordenMandarM(NodePtr nodo)
+{
+    if(nodo==NULL){
+            return "";
+    }else
+    {   string aux;
+        aux.append(nodo->nombre);
+        aux.append(" ");
+        aux.append(std::to_string(nodo->data));
+        aux.append("\n");
+        aux+=inordenMandarM(nodo->left);
+        aux+=inordenMandarM(nodo->right);
+        return aux;
+    }
 }
