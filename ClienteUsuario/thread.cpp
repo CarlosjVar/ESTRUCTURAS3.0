@@ -21,6 +21,7 @@ void Thread::run()
         if(socket.getestado())
         {
             cout<<"Se ha logueado"<<endl;
+            socket.setCed(cedula);
             menu();
         }
         else
@@ -142,9 +143,28 @@ void Thread::menu()
         }
         else if(opc=="5")
         {
-            comprar();
+            compra1();
         }
         else if(opc=="6")
+        {
+            break;
+        }
+    }
+}
+void Thread::compra1()
+{
+    string anadir="ADCL";
+
+    while(true)
+    {
+        std::cout<<"Que desea hacer: \n 1:Comprar \n 2:Pasar al carrito \n Opcion: "<<std::endl;
+        string respuesta;
+        cin>>respuesta;
+        if(respuesta=="1")
+        {   comprar();
+            return compra1();
+        }
+        else if(respuesta=="2")
         {
             break;
         }
@@ -199,12 +219,10 @@ void Thread::comprar()
             cin.ignore();
             cin.clear();
         }
+        cin.ignore();
         cout<<"Por favor digite un numero"<<endl;
     }
-    if(socket.getpro())
-    {
-        return;
-    }
+    std::cout<<socket.getpro()<<endl;
     consulta="CO";
     consulta.append("MA;");
     consulta.append(std::to_string(pasi));
@@ -213,6 +231,10 @@ void Thread::comprar()
     emit WriteByte(QByteArray::fromStdString(consulta));
     emit waitResponse(2000);
     sleep(1);
+    if(socket.getpro())
+    {
+        return;
+    }
     int marca;
     while(true)
     {
@@ -227,6 +249,54 @@ void Thread::comprar()
             cin.ignore();
             cin.clear();
         }
+        cin.ignore();
         cout<<"Por favor digite un numero"<<endl;
     }
+    consulta="CO";
+    consulta.append("CO;");
+    consulta.append(std::to_string(pasi));
+    consulta.append(";");
+    consulta.append(std::to_string(produ));
+    consulta.append(";");
+    consulta.append(std::to_string(marca));
+    emit WriteByte(QByteArray::fromStdString(consulta));
+    emit waitResponse(2000);
+    sleep(1);
+    if(socket.getmar())
+    {
+        return;
+    }
+    int cantidad;
+    while(true)
+    {
+        cout<<"Digite cuantos productos desea llevar: ";
+        std::cin>>cantidad;
+        if(!cin.fail())
+        {
+            break;
+        }
+        if(cin.fail())
+        {
+            cin.ignore();
+            cin.clear();
+        }
+        cin.ignore();
+        cout<<"Por favor digite un numero"<<endl;
+    }
+    consulta="CO";
+    consulta.append("AG;");
+    consulta.append(std::to_string(pasi));
+    consulta.append(";");
+    consulta.append(std::to_string(produ));
+    consulta.append(";");
+    consulta.append(std::to_string(marca));
+    consulta.append(";");
+    consulta.append(std::to_string(cantidad));
+    consulta.append(";");
+    consulta.append(std::to_string(socket.getCed()));
+    emit WriteByte(QByteArray::fromStdString(consulta));
+    emit waitResponse(2000);
+
+
+
 }

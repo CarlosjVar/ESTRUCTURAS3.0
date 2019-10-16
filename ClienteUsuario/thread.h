@@ -16,6 +16,7 @@ public:
     std::string pedirDato();
     void menu();
     void comprar();
+    void compra1();
 signals:
     void WriteByte(QByteArray data);
     void waitResponse(int q);

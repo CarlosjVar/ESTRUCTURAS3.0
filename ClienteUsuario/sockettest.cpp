@@ -98,6 +98,20 @@ void SocketTest::readyRead()
              token=strtok(nullptr,separador);
              std::string arbolbin=token;
              std::cout<<arbolbin<<std::endl;
+
+         }
+       else if(data.toStdString().substr(2,2)=="CO")
+         {
+             marInv=false;
+             std::string datos=data.toStdString();
+             char separador[]=";";
+             char cstr[datos.size()+1];
+             strcpy(cstr,datos.c_str());
+             char*token= strtok(cstr,separador);
+             token=strtok(nullptr,separador);
+             std::cout<<"Tenemos en stock esta cantidad de productos: "<<std::endl;
+             std::cout<<token<<std::endl;
+
          }
      }
     else if(data.toStdString().substr(0,2)=="VA")
@@ -109,9 +123,13 @@ void SocketTest::readyRead()
          }
          else if(data.toStdString().substr(2,2)=="PR")
          {
-
             std::cout<<"Producto invalido"<<std::endl;
             this->proInv=true;
+         }
+         else if(data.toStdString().substr(2,2)=="MA")
+         {
+           std::cout<<"Marca invalido"<<std::endl;
+           this->marInv=true;
          }
      }
 }
@@ -130,4 +148,16 @@ bool SocketTest::getpa()
 bool SocketTest::getpro()
 {
     return this->proInv;
+}
+bool SocketTest::getmar()
+{
+    return this->marInv;
+}
+void SocketTest::setCed(std::string ced)
+{
+    this->cedula=stoi(ced);
+}
+int SocketTest::getCed()
+{
+    return this->cedula;
 }

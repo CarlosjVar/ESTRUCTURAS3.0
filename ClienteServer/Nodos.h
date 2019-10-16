@@ -74,6 +74,7 @@ friend class PilaC;
 friend class Menu;
 };
 typedef nodoCompra*conodo;
+
 class PilaC
 {
 public:
@@ -128,22 +129,26 @@ private:
     int total;
     int mayor;
     friend class Menu;
-    friend class Cola;
+    friend class ColaS;
+    friend class Mycliente;
 };
 typedef nodoCliente*clienodo;
-class Cola{
+class ColaS{
     ///Cola encargada de hacer de cola de espera del supermercado
 public:
-    Cola(){primero=actual=NULL;}
+    ColaS(){primero=actual=NULL;}
     void insertarFinal(string pcedula,string pnombre,string ptelefono,string pcorreo,PilaC*carrito,int facturas);
     void BorrarInicio();
-    bool ColaVacia(){return primero==NULL;}
+    bool ColaVacia(){return primero==NULL;};
     clienodo obtenercliente();
     void Mostrar();
 private:
     nodoCliente*primero;
     nodoCliente*actual;
     friend class Menu;
+    friend class Mycliente;
 };
+
+
 
 #endif

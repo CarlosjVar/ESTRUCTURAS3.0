@@ -7,6 +7,7 @@ ArbolB clientes=ArbolB(5);
 ArbolB administradores=ArbolB(5);
 Binario supermercado;
 AA inventario=AA();
+ColaS colaclientes;
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);

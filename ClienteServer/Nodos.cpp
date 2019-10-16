@@ -15,8 +15,6 @@ void NodoBinarioAVL::InsertaBinarioAVL(int num, string nombre)
         }
     }
 }
-
-
 void NodoBinario::InsertaBinario(int num,string nombre)
 {
     if(num<valor){
@@ -33,7 +31,7 @@ void NodoBinario::InsertaBinario(int num,string nombre)
         }
     }
 }
-void Cola::insertarFinal(string pcedula,string pnombre,string ptelefono,string pcorreo,PilaC*carrito,int facturas)
+void ColaS::insertarFinal(string pcedula,string pnombre,string ptelefono,string pcorreo,PilaC*carrito,int facturas)
 ///Funci�n que inserta al final de la cola
 {
     if (ColaVacia())
@@ -53,7 +51,7 @@ void Cola::insertarFinal(string pcedula,string pnombre,string ptelefono,string p
       }
 
 }
-void Cola::BorrarInicio()
+void ColaS::BorrarInicio()
 ///Funci�n encargada de eliminar el primer cliente en entrar a la cola
 {
 if (ColaVacia()){
@@ -70,7 +68,7 @@ if (ColaVacia()){
         }
     }
 }
-clienodo Cola::obtenercliente()
+clienodo ColaS::obtenercliente()
 ///Encargado de retornar el primer cliente en entrar a la cola
 {
     if(ColaVacia())
@@ -129,4 +127,58 @@ void listasort::print() {
     aux = aux->siguiente;
   }
   cout << endl;
+}
+conodo PilaC::BorrarInicio()
+{
+    conodo aux;
+if (PilaVacia()){
+ cout << "No hay elementos en la lista:" << endl;
+}
+    else{
+    if (primero->siguiente == NULL) {
+                primero= NULL;
+            } else {
+                primero=primero->siguiente;
+            }
+    return aux;
+    }
+}
+void ColaS::Mostrar()
+///Muestra las personas en cola
+{
+   clienodo aux;
+   if (primero== NULL)
+       cout << "No hay elementos";
+   else
+   {
+
+
+        aux = primero;
+        while(aux)
+        {
+            cout << aux->nombre << "-> ";
+            aux = aux->siguiente;
+        }
+        cout << endl;
+   }
+}
+void PilaC::Mostrar()
+///Muestra la pila de productos
+{
+   conodo aux;
+if (primero== NULL)
+   cout << "No hay elementos";
+else
+{
+
+
+    aux = primero;
+    while(aux)
+    {
+        cout << aux->nombre<< "-> ";
+        aux = aux->siguiente;
+    }
+    cout << endl;
+   }
+
 }

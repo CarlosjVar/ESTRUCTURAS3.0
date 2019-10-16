@@ -27,11 +27,16 @@ public slots:
     bool getestado();
     bool getpa();
     bool getpro();
+    bool getmar();
+    void setCed(std::string ced);
+    int getCed();
 private:
     QTcpSocket *socket;
     bool conectado;
     bool paInv=false;
     bool proInv=false;
+    bool marInv=false;
+    int cedula;
 friend class Thread;
 };
 

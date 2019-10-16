@@ -96,8 +96,80 @@ void Mycliente::readyRead()
                 QByteArray validacion="VAPR";
                 this->write(validacion);
             }
-
-
+        }
+        else if(data.toStdString().substr(2,2)=="CO")
+        {
+            string datos=data.toStdString();
+            char separador[]=";";
+            char cstr[datos.size()+1];
+            strcpy(cstr,datos.c_str());
+            char*token= strtok(cstr,separador);
+            token=strtok(nullptr,separador);
+            int pasillo=stoi(token);
+            token=strtok(nullptr,separador);
+            int productoi=stoi(token);
+            token=strtok(nullptr,separador);
+            int marcaI=stoi(token);
+            pNodoBinario raiz=supermercado.raiz;
+            pNodoBinario pasillon=buscarNodo(raiz,pasillo);
+            pNodoBinarioAVL producton=buscarNodoAVL(pasillon->productos,productoi);
+            RBTree rojo=RBTree(producton->marcas);
+            NodePtr marca=rojo.searchTree(marcaI);
+            if(marca!=nullptr)
+            {
+                string send="COCO;";
+                std::cout<<marca->cantidadGondola<<std::endl;
+                string arbol=std::to_string(marca->cantidadGondola);
+                send.append(arbol);
+                std::cout<<send<<std::endl;
+                this->write(QByteArray::fromStdString(send));
+            }
+            else
+            {
+                QByteArray validacion="VAMA";
+                this->write(validacion);
+            }
+        }
+        else if(data.toStdString().substr(2,2)=="AG")
+        {
+            string datos=data.toStdString();
+            char separador[]=";";
+            char cstr[datos.size()+1];
+            strcpy(cstr,datos.c_str());
+            char*token= strtok(cstr,separador);
+            token=strtok(nullptr,separador);
+            int pasillo=stoi(token);
+            token=strtok(nullptr,separador);
+            int productoi=stoi(token);
+            token=strtok(nullptr,separador);
+            int marcaI=stoi(token);
+            pNodoBinario raiz=supermercado.raiz;
+            pNodoBinario pasillon=buscarNodo(raiz,pasillo);
+            pNodoBinarioAVL producton=buscarNodoAVL(pasillon->productos,productoi);
+            RBTree rojo=RBTree(producton->marcas);
+            NodePtr marca=rojo.searchTree(marcaI);
+            token=strtok(nullptr,separador);
+            int cantidad=stoi(token);
+            token=strtok(nullptr,separador);
+            int cedula=stoi(token);
+            if(cantidad>marca->cantidadGondola)
+            {
+                cantidad=marca->cantidadGondola;
+                marca->cantidadGondola=0;
+            }
+            else
+            {
+                marca->cantidadGondola=marca->cantidadGondola-cantidad;
+            }
+            clienodo aux=colaclientes.primero;
+            while(aux!=nullptr)
+            {
+                if(aux->cedula==std::to_string(cedula))
+                {
+                    aux->carrito->InsertarInicio(std::to_string(pasillo),std::to_string(productoi),std::to_string(marcaI),marca->nombre,cantidad);
+                    aux=aux->siguiente;
+                }
+            }
         }
     }
 }
@@ -116,6 +188,8 @@ cliente=clientes.buscar(std::stoi(cedula),k);
 if (cliente!=nullptr)
 {
     socket->write("LOS");
+    PilaC*carrito=new PilaC;
+    colaclientes.insertarFinal(cedula,cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),cliente->obtenerDato(k,3),carrito,0);
 }
 else
 {
@@ -146,7 +220,7 @@ void Mycliente::registrarCliente(QByteArray data)
     if (aux == NULL){
         clientes.insertar(cedulaS,nombre,numero,ciudad,correo);
         socket->write("RGY");
-        setCedula(cedulaS);
+
     }
     else
     {
