@@ -11,7 +11,7 @@ class Menu{
 public:
     Menu()
     {
-        Cola*espera=new Cola;
+
     }
 //void rellenarInventario(inventario inven,listasort listaventas);
 //int traerInventario(inventario inventario,int solicita,conodo compra);
@@ -35,176 +35,10 @@ void menuConsultar();
 void consultaPrecio();
 void consultaImpuesto();
 void consultaPertenencia();
-//void menucompra(Binario B1,clienodo persona);
-//void agregarcarrito(Binario B1,clienodo persona);
-//void agregarcarrito2(Binario B1,clienodo persona,pNodoBinarioAVL pasillop);
-//void agregarcarrito3(Binario B1,clienodo persona,pNodoBinarioAVL pasillop,pNodoBinarioAVL productop);
-//void agregarcarrito4(Binario B1,clienodo persona,pNodoBinarioAVL pasillop,pNodoBinarioAVL productop,Node*marcap);
-//void getPrecio(string pasillo,string producto,string marca);
-//void reportes(Binario B1,listaClientes clientes,inventario inven);
 private:
-    Cola*espera;
 //    listasort listaventasG;
 //    listasort listaventasI;
 };
-
-
-//void Menu::reportes(Binario B1,ArbolB cliente,inventario inven)
-/////Input: ListaDC Supermercado, listaClientes
-/////output: Funci�n que genera un reporte
-/////Funci�n: Sirve de men� para generar reportes
-//{
-//    int opcion;
-//    cout<<"Que desea hacer?"<<endl;
-//    cout<<"1. Pasillo mas visitado \n";
-//    cout<<"2. Pasillo menos visitado \n";
-//    cout<<"3. Productos por pasillo m�s vendidos \n";
-//    cout<<"4. Marca mas vendida \n";
-//    cout<<"5. Cliente que mas compro \n";
-//    cout<<"6. Cliente que menos compro \n";
-//    cout<<"7. Producto mas cargado en gondolas \n";
-//    cout<<"8. Cliente que más facturó \n";
-//    cout<<"9. Marcas de un producto \n";
-//    cout<<"10.Productos de un pasillo \n";
-//    cout<<"11.Clientes del supermercado \n";
-//    cout<<"12.Pasillos del supermercado \n";
-//    cout<<"13.Inventario del supermercado \n";
-//    cout<<"Opcion: ";
-//    cin>>opcion;
-//    if(cin.fail())
-//    {
-//        cout<<"Entrada invalida,por favor ingrese numeros"<<endl;
-//        cin.clear();
-//        cin.ignore(256,'\n');
-//        return reportes(super,cliente,inven);
-//    }
-//    if(opcion<14 || opcion>0)
-//    {
-//        switch(opcion)
-//        {
-//        case 1:
-//            {
-//            super.pasilloMV(super);
-//            string topicname="Pasillo+Visitado";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//            }
-//        case 2:
-//            {
-//
-//            super.pasilloLV(super);
-//            string topicname="Pasillo-Visitado";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//            }
-//        case 3:
-//            {
-//            super.prodPasillMv(super);
-//            string topicname="ProductoPas";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            }
-//            break;
-//        case 4:
-//            {
-//
-//            super.marcasV(super);
-//            string topicname="Marcas+V";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//            }
-//
-//        case 5:
-//            {
-//            cliente.clienteMas(cliente);
-//            string topicname="ClienteMas";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//            }
-//        case 6:
-//        {
-//            cliente.clienteMenos(cliente);
-//            string topicname="ClienteMenos";
-//     #include  "Pila.h"       topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//        }
-//        case 7:
-//        {
-//            super.sacarMR(super);
-//            string topicname="Marcas+R";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//        }
-//        case 8:
-//        {
-//            cliente.masfacturas(cliente);
-//            string topicname="ClienteMasF";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//        }
-//
-//        case 9:
-//        {
-//        super.marcasPasProd(super);
-//        string topicname="MarcxProdxPas";
-//        topicname="notepad \""+topicname+"\"";
-//        system(topicname.c_str());
-//        break;
-//        }
-//
-//        case 10:
-//        {
-//        super.productosPas(super);
-//        string topicname="ProdxPas";
-//        topicname="notepad \""+topicname+"\"";
-//        system(topicname.c_str());
-//        break;
-//        }
-//
-//        case 11:
-//            {
-//            cliente.sacarClientes(cliente);
-//            string topicname="ClientesR";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//            }
-//        case 12:
-//            {
-//            super.sacarPas(super);
-//            string topicname="PasillosR";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//            }
-//
-//        case 13:
-//        {
-//            inven.sacarInv(inven);
-//            string topicname="InventarioR";
-//            topicname="notepad \""+topicname+"\"";
-//            system(topicname.c_str());
-//            break;
-//        }
-//        }
-//    }
-//    else
-//    {
-//        cout<<"Digite una opci�n del 1 al 13"<<endl;
-//        return reportes(super,cliente,inven);
-//    }
-//
-//
-//
-//
-//}
 
 //void Menu::agregarcarrito4(Binario super,clienodo persona,pNodoBinarioAVL pasillop,pNodoBinarioAVL productop,Node*marcap)
 /////In:Binario B1,clienodo persona,pNodoBinarioAVL pasillop,pNodoBinarioAVL productop,pNodoBinarioAVL marcap
