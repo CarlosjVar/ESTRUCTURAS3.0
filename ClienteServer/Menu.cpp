@@ -37,9 +37,7 @@ void Menu::menu()
         cout<<"Opcion de facturar"<<endl;
     else if(opcion==2)
     {
-        //rellenarGondolas(Supermercado,inventario,listaventasG);
-        //listaventasG.first=NULL;
-        cout<<"Opcion de rellenar gondolas"<<endl;
+        supermercado.rellenarGondolaBinario(inventario);
     }
     else if (opcion==3)
     {
@@ -77,6 +75,7 @@ void Menu::menu()
    menu();
    return ;
 }
+
 
 void Menu::menuAgregar(){
     int opcion;

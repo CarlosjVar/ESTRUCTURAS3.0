@@ -1,5 +1,6 @@
 #ifndef ROJINEGRO_H_INCLUDED
 #define ROJINEGRO_H_INCLUDED
+#include "AA.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -86,6 +87,7 @@ public:
 	// insert the key to the tree in its appropriate position
 	// and fix the tree
     void insert(int key,string nombre, int precio, int cantidadGondola);
+    void rellenarGondolaRN (NodePtr raiz, int codigoPasillo, int codigoProducto, AA inventario);
 
     NodePtr getRoot();
     void prettyPrint();

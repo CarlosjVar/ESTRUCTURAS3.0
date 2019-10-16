@@ -41,6 +41,19 @@ void Binario::cargarPasillos(string pNombreArchivo){
     archivo.close();
 }
 
+void Binario::rellenarGondolaBinario(AA inventario){
+    rellenarGondolaBinario(this->raiz,inventario);
+}
+
+void Binario::rellenarGondolaBinario(pNodoBinario raiz, AA inventario){
+    if (raiz==NULL){
+        return;
+    }
+    rellenarGondolaBinario(raiz->Hder, inventario);
+    rellenarGondolaBinario(raiz->Hizq,inventario);
+    BinarioAVL temp = BinarioAVL();
+    temp.rellenarGondolaAVL(raiz->productos, raiz->valor,inventario);
+}
 
 void Binario::InsertaNodo(int num,string nombre)
 {
@@ -196,6 +209,15 @@ void Binario::cargarMarcas (string pNombreArchivo){
     return;
 }
 
+void BinarioAVL::rellenarGondolaAVL(pnodoAVL raiz, int codigoPasillo, AA inventario){
+    if (raiz==NULL){
+        return;
+    }
+    rellenarGondolaAVL(raiz->Hder, codigoPasillo, inventario);
+    rellenarGondolaAVL(raiz->Hizq, codigoPasillo, inventario);
+    RBTree temp = RBTree();
+    temp.rellenarGondolaRN(raiz->marcas, codigoPasillo, raiz->valor, inventario);
+}
 
 void BinarioAVL::PreordenI(){
     NodoBinarioAVL *Act = raiz;

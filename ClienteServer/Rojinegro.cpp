@@ -1,4 +1,67 @@
 #include "Rojinegro.h"
+void RBTree::rellenarGondolaRN (NodePtr raiz, int codigoPasillo, int codigoProducto, AA inventario){
+    if (raiz==NULL){
+        return;
+    }
+    rellenarGondolaRN(raiz->right,codigoPasillo,codigoProducto, inventario);
+    rellenarGondolaRN(raiz->left,codigoPasillo,codigoProducto, inventario);
+    if (raiz->cantidadGondola>2){
+        return;
+    }
+    int recarga;
+    string opcion;
+    cout<<"Quedan ";
+    cout<<raiz->cantidadGondola;
+    cout<<" unidades en gondola de la marca "+raiz->nombre<<endl;
+    while (true){
+        cout<<"Digite la cantidad de existencias a tomar del inventario para colocar en gondola: ";
+        cin>>recarga;
+        if(cin.fail())
+        {
+            cout<<"La cantidad de existencias a tomar debe ser un numero entero"<<endl;
+            cin.clear();
+            cin.ignore(256,'\n');
+        }else
+        {
+            break;
+        }
+    }
+    pnodoAA aux = inventario.buscarNodoAA(stoi(to_string(codigoPasillo)+to_string(codigoProducto)+to_string(raiz->data)));
+    if (aux!=NULL){
+        if (aux->cantidadStock>=recarga){
+            raiz->cantidadGondola+=recarga;
+            aux->cantidadStock-=recarga;
+            cout<<"Recarga completa"<<endl;
+            return;
+        }else{
+            if (aux->cantidadStock==0){
+                cout<<"No quedan existencias de esta marca en el inventario"<<endl;
+                return;
+            }else{
+                string opcion2;
+                cout<<"Solo quedan ";
+                cout<<aux->cantidadStock;
+                cout<<" existencias en inventario de esta marca"<<endl;
+                cout<<"Digite 1 para mover dichas unidades a la gondola u otra tecla para salir: ";
+                cin>>opcion2;
+                if (opcion2=="1"){
+                    raiz->cantidadGondola+=aux->cantidadStock;
+                    aux->cantidadStock=0;
+                    cout<<"Recarga completa"<<endl;
+                    return;
+                }else{
+                    return;
+                }
+            }
+        }
+    }else{
+        cout<<"No se ha encontrado en el inventario la informacion correspondiente a esta marca"<<endl;
+    }
+}
+
+
+
+
 void RBTree::initializeNULLNode(NodePtr node, NodePtr parent) {
     node->data = 0;
     node->parent = parent;
