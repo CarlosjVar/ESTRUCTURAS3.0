@@ -20,6 +20,7 @@ SOURCES += \
         AA.cpp \
         B.cpp \
         Binario.cpp \
+        Menu.cpp \
         Nodos.cpp \
         Pila.cpp \
         Rojinegro.cpp \

@@ -1,4 +1,5 @@
 #include "adminthread.h"
+#include "menu.h"
 using namespace std;
 adminThread::adminThread(QObject*parent)
 {
@@ -16,7 +17,8 @@ void adminThread::run()
     if(pag!=nullptr)
     {
         cout<<"Bienvenido: "<<pag->obtenerDato(k,0)<<endl;
-
+        Menu menu1 = Menu();
+        menu1.menu();
     }
     else
     {
