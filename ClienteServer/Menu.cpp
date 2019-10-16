@@ -6,7 +6,7 @@ void Menu::menu()
 //Funci�n: Men� que funciona como nexo principal entre todas las funcionalidades
 {
     int opcion;
-    cout<<"Sistema de gestion del supermercado"<<endl<<"por favor selecciones una opcion: "<<endl;
+    cout<<"Sistema de gestion del supermercado"<<endl<<"Por favor selecciones una opcion: "<<endl;
     cout<<"1. Facturar"<<endl;
     cout<<"2. Revisar Gondolas"<<endl;
     cout<<"3. Verificar Inventario"<<endl;
@@ -23,6 +23,8 @@ void Menu::menu()
         cout<<"Opcion invalida"<<endl;
         cin.clear();
         cin.ignore(256,'\n');
+        menu();
+        return;
     }
     if (opcion==1)
 //        if(espera->ColaVacia())
@@ -60,7 +62,7 @@ void Menu::menu()
     }
     else if(opcion==7)
     {
-       cout<<"opcion de consultas"<<endl;
+       menuConsultar();
     }
     else if(opcion==0)
     {
@@ -90,6 +92,8 @@ void Menu::menuAgregar(){
         cout<<"Opcion invalida"<<endl;
         cin.clear();
         cin.ignore(256,'\n');
+        menuAgregar();
+        return;
     }
     if (opcion==1)
         agregarPasillo();
@@ -363,16 +367,18 @@ void Menu::menuModificar(){
         cout<<"Opcion invalida"<<endl;
         cin.clear();
         cin.ignore(256,'\n');
+        menuModificar();
+        return;
     }
     if (opcion==1)
         modificarPrecio ();
     else if(opcion==2)
     {
-        //modificarImpuesto ();
+        modificarImpuesto ();
     }
     else if (opcion==3)
     {
-        //modificarPertenencia (B1);
+        modificarPertenencia();
     }
     else if(opcion==0)
     {
@@ -438,7 +444,7 @@ void Menu::modificarPrecio(){
                         }
                         RBTree temp = RBTree (aux2->marcas);
                         NodePtr aux3 = temp.searchTree(codigo);
-                        if (codigo!=NULL){
+                        if (aux3!=NULL){
                             cout<<"Ha seleccionado la marca: "<<aux3->nombre<<endl;
                             cout<<"Ingrese el nuevo precio de esta marca: ";
                             cin>>precio;
@@ -471,5 +477,452 @@ void Menu::modificarPrecio(){
         }
     }
 }
+
+void Menu::modificarImpuesto(){
+    int codigoPasillo;
+    int codigoProducto;
+    int codigoMarca;
+    int codigoI;
+    string codigoIS;
+    float impuesto;
+    cout<<"Ingrese el codigo del pasillo en el cual esta la marca cuyo impuesto desea cambiar, o un cero para volver: ";
+    cin>>codigoPasillo;
+    if(cin.fail())
+    {
+        cout<<"Codigo invalido"<<endl;
+        cin.clear();
+        cin.ignore(256,'\n');
+    }
+    else
+    {
+        pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
+        if (codigoPasillo==0){
+            return;
+        }
+        if (aux != NULL){
+            cout<<"Ha seleccionado el pasillo: "<<aux->nombre<<endl;
+            cout<<"Ingrese el codigo del producto en el cual esta la marca cuyo impuesto desea cambiar, o un cero para volver: ";
+            cin>>codigoProducto;
+            if(cin.fail())
+            {
+                cout<<"Codigo invalido"<<endl;
+                cin.clear();
+                cin.ignore(256,'\n');
+            }
+            else{
+                pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,codigoProducto);
+                if (codigoProducto==0){
+                    return;
+                }
+                if (aux2!=NULL){
+                    cout<<"Ha seleccionado el producto: "<<aux2->nombre<<endl;
+                    cout<<"Ingrese el codigo de la marca cuyo precio desea cambiar, o un cero para volver: ";
+                    cin>>codigoMarca;
+                    if(cin.fail())
+                    {
+                        cout<<"Codigo invalido"<<endl;
+                        cin.clear();
+                        cin.ignore(256,'\n');
+                    }
+                    else{
+                        if (codigoMarca==0){
+                            return;
+                        }
+                        codigoIS = to_string(codigoPasillo) + to_string(codigoProducto) + to_string(codigoMarca);
+                        codigoI = stoi (codigoIS);
+                        pnodoAA aux3 = inventario.buscarNodoAA(codigoI);
+                        if (aux3!=NULL){
+                            cout<<"Ha seleccionado la marca: "<<aux3->nombre<<", la cual tiene un impuesto de: "<<aux3->impuesto<<endl;
+                            cout<<"Ingrese el nuevo impuesto: "<<endl;
+                            cin>>impuesto;
+                            if(cin.fail())
+                            {
+                                cout<<"Impuesto invalido"<<endl;
+                                cin.clear();
+                                cin.ignore(256,'\n');
+                                return;
+                            }
+                            aux3->impuesto = impuesto;
+                            cout<<"Impuesto modificado"<<endl;
+                        }else{
+                            cout<<"No se encontro la marca ingresada en el inventario"<<endl;
+                        }
+                    }
+                }
+                else
+                {
+                    cout<<"No existen productos con el codigo ingresado"<<endl;
+                }
+            }
+        }
+        else
+        {
+            cout<<"No existen pasillos con el codigo ingresado"<<endl;
+        }
+    }
+}
+
+void Menu::modificarPertenencia(){
+    int codigoPasillo;
+    int codigoProducto;
+    int codigoMarca;
+    int codigoI;
+    string codigoIS;
+    int canasta;
+    cout<<"Ingrese el codigo del pasillo en el cual esta la marca cuya pertenencia desea cambiar, o un cero para volver: ";
+    cin>>codigoPasillo;
+    if(cin.fail())
+    {
+        cout<<"Codigo invalido"<<endl;
+        cin.clear();
+        cin.ignore(256,'\n');
+    }
+    else
+    {
+        pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
+        if (codigoPasillo==0){
+            return;
+        }
+        if (aux != NULL){
+            cout<<"Ha seleccionado el pasillo: "<<aux->nombre<<endl;
+            cout<<"Ingrese el codigo del producto en el cual esta la marca cuya pertenencia desea cambiar, o un cero para volver: ";
+            cin>>codigoProducto;
+            if(cin.fail())
+            {
+                cout<<"Codigo invalido"<<endl;
+                cin.clear();
+                cin.ignore(256,'\n');
+            }
+            else{
+                pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,codigoProducto);
+                if (codigoProducto==0){
+                    return;
+                }
+                if (aux2!=NULL){
+                    cout<<"Ha seleccionado el producto: "<<aux2->nombre<<endl;
+                    cout<<"Ingrese el codigo de la marca cuya pertenencia desea cambiar, o un cero para volver: ";
+                    cin>>codigoMarca;
+                    if(cin.fail())
+                    {
+                        cout<<"Codigo invalido"<<endl;
+                        cin.clear();
+                        cin.ignore(256,'\n');
+                    }
+                    else{
+                        if (codigoMarca==0){
+                            return;
+                        }
+                        codigoIS = to_string(codigoPasillo) + to_string(codigoProducto) + to_string(codigoMarca);
+                        codigoI = stoi (codigoIS);
+                        pnodoAA aux3 = inventario.buscarNodoAA(codigoI);
+                        if (aux3!=NULL){
+                            cout<<"Ha seleccionado la marca: "<<aux3->nombre;
+                            if (aux3->canastaB==1){
+                                cout<<", la cual no pertenece a la canasta basica"<<endl;
+                            }
+                            else{
+                                cout<<", la cual pertenece a la canasta basica"<<endl;
+                            }
+                            cout<<"Digite un 0 para que esta marca pertenezca a la canasta y un 1 en caso contrario: ";
+                            cin>>canasta;
+                            if(cin.fail())
+                            {
+                                cout<<"Opcion invalida"<<endl;
+                                cin.clear();
+                                cin.ignore(256,'\n');
+                                return;
+                            }
+                            if (canasta!=1 && canasta !=0){
+                                cout<<"Opcion invalida"<<endl;
+                            }
+                            aux3->canastaB = canasta;
+                            cout<<"Pertenencia modificada"<<endl;
+                        }else{
+                            cout<<"No se encontro la marca ingresada en el inventario"<<endl;
+                        }
+                    }
+                }
+                else
+                {
+                    cout<<"No existen productos con el codigo ingresado"<<endl;
+                }
+            }
+        }
+        else
+        {
+            cout<<"No existen pasillos con el codigo ingresado"<<endl;
+        }
+    }
+}
+
+void Menu::menuConsultar(){
+    int opcion;
+    cout<<"1. Precio de una marca"<<endl;
+    cout<<"2. Pertenencia de una marca a la canasta basica"<<endl;
+    cout<<"3. Porcentaje de impuesto de una marca"<<endl;
+    cout<<"0. Volver al menu de administrador"<<endl;
+    cout<<"Seleccione el dato que desea consultar: ";
+    cin>>opcion;
+    if(cin.fail())
+    {
+        cout<<"Opcion invalida"<<endl;
+        cin.clear();
+        cin.ignore(256,'\n');
+        menuConsultar();
+        return;
+    }
+    if (opcion==1)
+        consultaPrecio ();
+    else if(opcion==2)
+    {
+       consultaPertenencia ();
+    }
+    else if (opcion==3)
+    {
+        consultaImpuesto ();
+    }
+    else if(opcion==0)
+    {
+       return;
+    }
+    else
+    {
+        cout<<"Opcion invalida"<<endl;
+        menuConsultar();
+        return;
+    }
+    menuConsultar();
+    return;
+}
+
+void Menu::consultaPrecio (){
+    int codigoPasillo;
+    int codigoProducto;
+    int codigo;
+    cout<<"Ingrese el codigo del pasillo en el cual esta la marca cuyo precio desea consultar, o un cero para volver: ";
+    cin>>codigoPasillo;
+    if(cin.fail())
+    {
+        cout<<"Codigo invalido"<<endl;
+        cin.clear();
+        cin.ignore(256,'\n');
+    }
+    else
+    {
+        pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
+        if (codigoPasillo==0){
+            return;
+        }
+        if (aux != NULL){
+            cout<<"Ha seleccionado el pasillo: "<<aux->nombre<<endl;
+            cout<<"Ingrese el codigo del producto en el cual esta la marca cuyo precio desea consultar, o un cero para volver: ";
+            cin>>codigoProducto;
+            if(cin.fail())
+            {
+                cout<<"Codigo invalido"<<endl;
+                cin.clear();
+                cin.ignore(256,'\n');
+            }
+            else{
+                pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,codigoProducto);
+                if (codigoProducto==0){
+                    return;
+                }
+                if (aux2!=NULL){
+                    cout<<"Ha seleccionado el producto: "<<aux2->nombre<<endl;
+                    cout<<"Ingrese el codigo de la marca cuyo precio desea consultar, o un cero para volver: ";
+                    cin>>codigo;
+                    if(cin.fail())
+                    {
+                        cout<<"Codigo invalido"<<endl;
+                        cin.clear();
+                        cin.ignore(256,'\n');
+                    }
+                    else{
+                        if (codigo==0){
+                            return;
+                        }
+                        RBTree temp = RBTree (aux2->marcas);
+                        NodePtr aux3 = temp.searchTree(codigo);
+                        if (aux3!=NULL){
+                            cout<<"Ha seleccionado la marca: "<<aux3->nombre<<", cuyo precio es: "<<aux3->precio<<" colones"<<endl;
+                        }
+                        else
+                        {
+                            cout<<"No existen marcas con el codigo ingresado"<<endl;
+                        }
+                    }
+                }
+                else
+                {
+                    cout<<"No existen productos con el codigo ingresado"<<endl;
+                }
+            }
+        }
+        else
+        {
+            cout<<"No existen pasillos con el codigo ingresado"<<endl;
+        }
+    }
+}
+
+void Menu::consultaImpuesto(){
+    int codigoPasillo;
+    int codigoProducto;
+    int codigoMarca;
+    int codigoI;
+    string codigoIS;
+    int canasta;
+    cout<<"Ingrese el codigo del pasillo en el cual esta la marca cuyo impuesto desea consultar, o un cero para volver: ";
+    cin>>codigoPasillo;
+    if(cin.fail())
+    {
+        cout<<"Codigo invalido"<<endl;
+        cin.clear();
+        cin.ignore(256,'\n');
+    }
+    else
+    {
+        pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
+        if (codigoPasillo==0){
+            return;
+        }
+        if (aux != NULL){
+            cout<<"Ha seleccionado el pasillo: "<<aux->nombre<<endl;
+            cout<<"Ingrese el codigo del producto en el cual esta la marca cuyo impuesto desea consultar, o un cero para volver: ";
+            cin>>codigoProducto;
+            if(cin.fail())
+            {
+                cout<<"Codigo invalido"<<endl;
+                cin.clear();
+                cin.ignore(256,'\n');
+            }
+            else{
+                pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,codigoProducto);
+                if (codigoProducto==0){
+                    return;
+                }
+                if (aux2!=NULL){
+                    cout<<"Ha seleccionado el producto: "<<aux2->nombre<<endl;
+                    cout<<"Ingrese el codigo de la marca cuyo impuesto desea consultar, o un cero para volver: ";
+                    cin>>codigoMarca;
+                    if(cin.fail())
+                    {
+                        cout<<"Codigo invalido"<<endl;
+                        cin.clear();
+                        cin.ignore(256,'\n');
+                    }
+                    else{
+                        if (codigoMarca==0){
+                            return;
+                        }
+                        codigoIS = to_string(codigoPasillo) + to_string(codigoProducto) + to_string(codigoMarca);
+                        codigoI = stoi (codigoIS);
+                        pnodoAA aux3 = inventario.buscarNodoAA(codigoI);
+                        if (aux3!=NULL){
+                            cout<<"Ha seleccionado la marca: "<<aux3->nombre<<", cuyo porcentaje de impuesto es: "<<aux3->impuesto<<endl;
+                        }else{
+                            cout<<"No se encontro la marca ingresada en el inventario"<<endl;
+                        }
+                    }
+                }
+                else
+                {
+                    cout<<"No existen productos con el codigo ingresado"<<endl;
+                }
+            }
+        }
+        else
+        {
+            cout<<"No existen pasillos con el codigo ingresado"<<endl;
+        }
+    }
+}
+
+void Menu::consultaPertenencia(){
+    int codigoPasillo;
+    int codigoProducto;
+    int codigoMarca;
+    int codigoI;
+    string codigoIS;
+    int canasta;
+    cout<<"Ingrese el codigo del pasillo en el cual esta la marca cuya pertenencia desea consultar, o un cero para volver: ";
+    cin>>codigoPasillo;
+    if(cin.fail())
+    {
+        cout<<"Codigo invalido"<<endl;
+        cin.clear();
+        cin.ignore(256,'\n');
+    }
+    else
+    {
+        pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
+        if (codigoPasillo==0){
+            return;
+        }
+        if (aux != NULL){
+            cout<<"Ha seleccionado el pasillo: "<<aux->nombre<<endl;
+            cout<<"Ingrese el codigo del producto en el cual esta la marca cuya pertenencia desea consultar, o un cero para volver: ";
+            cin>>codigoProducto;
+            if(cin.fail())
+            {
+                cout<<"Codigo invalido"<<endl;
+                cin.clear();
+                cin.ignore(256,'\n');
+            }
+            else{
+                pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,codigoProducto);
+                if (codigoProducto==0){
+                    return;
+                }
+                if (aux2!=NULL){
+                    cout<<"Ha seleccionado el producto: "<<aux2->nombre<<endl;
+                    cout<<"Ingrese el codigo de la marca cuya pertenencia desea consultar, o un cero para volver: ";
+                    cin>>codigoMarca;
+                    if(cin.fail())
+                    {
+                        cout<<"Codigo invalido"<<endl;
+                        cin.clear();
+                        cin.ignore(256,'\n');
+                    }
+                    else{
+                        if (codigoMarca==0){
+                            return;
+                        }
+                        codigoIS = to_string(codigoPasillo) + to_string(codigoProducto) + to_string(codigoMarca);
+                        codigoI = stoi (codigoIS);
+                        pnodoAA aux3 = inventario.buscarNodoAA(codigoI);
+                        if (aux3!=NULL){
+                            cout<<"Ha seleccionado la marca: "<<aux3->nombre;
+                            if (aux3->canastaB==1){
+                                cout<<", la cual no pertenece a la canasta basica"<<endl;
+                            }
+                            else{
+                                cout<<", la cual pertenece a la canasta basica"<<endl;
+                            }
+                        }else{
+                            cout<<"No se encontro la marca ingresada en el inventario"<<endl;
+                        }
+                    }
+                }
+                else
+                {
+                    cout<<"No existen productos con el codigo ingresado"<<endl;
+                }
+            }
+        }
+        else
+        {
+            cout<<"No existen pasillos con el codigo ingresado"<<endl;
+        }
+    }
+}
+
+
+
+
+
+
+
 
 

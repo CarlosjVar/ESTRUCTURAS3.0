@@ -10,6 +10,8 @@ AA inventario=AA();
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    Server myserv;
+    myserv.StartServer();
     supermercado.cargarPasillos("Pasillos.txt");
     supermercado.cargarProductos("ProductosPasillos.txt");
     supermercado.cargarMarcas("MarcasProductos.txt");
@@ -20,7 +22,5 @@ int main(int argc, char *argv[])
     inventario.cargarInventario("inventario.txt");
     adminThread admin;
     admin.start();
-    Server myserv;
-    myserv.StartServer();
     return a.exec();
 }
