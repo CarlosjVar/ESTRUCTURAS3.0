@@ -8,11 +8,11 @@ void Server::StartServer()
 {
     if(listen(QHostAddress::Any,1234))
     {
-        qDebug()<<"Conectado";
+        qDebug()<<"Servidor conectado";
     }
     else
     {
-        qDebug()<<"No se ha podido conectar";
+        qDebug()<<"No se ha conectado el servidor";
     }
 }
 void Server::incomingConnection(qintptr handle)

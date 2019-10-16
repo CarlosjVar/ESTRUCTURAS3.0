@@ -23,6 +23,8 @@ public:
     void PostordenG(pNodoBinario pRaiz);
     void cargarPasillos (string pNombreArchivo);
     void cargarMarcas (string pNombreArchivo);
+    void rellenarGondolaBinario (AA inventario);
+    void rellenarGondolaBinario (pNodoBinario raiz, AA inventario);
     bool Hh = false;
 };
 
@@ -45,6 +47,7 @@ public:
     void RotacionDobleDerecha(NodoBinarioAVL *&n1, NodoBinarioAVL *&n2);
     void RotacionSimpleIzquierda(NodoBinarioAVL *&n1, NodoBinarioAVL *&n2);
     void RotacionSimpleDerecha(NodoBinarioAVL *&n1, NodoBinarioAVL *&n2);
+    void rellenarGondolaAVL (pnodoAVL raiz, int codigoPasillo, AA inventario);
 };
 pNodoBinario buscarNodo(pNodoBinario pRaiz, int valor);
 pNodoBinarioAVL buscarNodoAVL(pNodoBinarioAVL pRaiz, int valor);

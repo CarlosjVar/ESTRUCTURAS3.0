@@ -41,11 +41,11 @@ void AA::Postorden(pnodoAA R){
     }
 }
 
-void AA::insertar (int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB){
-    this->raiz = insertar(this->raiz,  val,  codigoPasillo,  codigoProducto,  codigoMarca,  nombre,  cantidadStock, canastaB);
+void AA::insertar (int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB, float impuesto){
+    this->raiz = insertar(this->raiz,  val,  codigoPasillo,  codigoProducto,  codigoMarca,  nombre,  cantidadStock, canastaB,impuesto);
 }
 
-pnodoAA AA::insertar(pnodoAA aux, int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB)
+pnodoAA AA::insertar(pnodoAA aux, int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB, float impuesto)
 {
     if (aux==NULL){
         aux=new nodoAA(val);
@@ -55,12 +55,13 @@ pnodoAA AA::insertar(pnodoAA aux, int val, int codigoPasillo, int codigoProducto
         aux->nombre = nombre;
         aux->cantidadStock = cantidadStock;
         aux->canastaB = canastaB;
+        aux->impuesto = impuesto;
     }
     else if (val<aux->valor){
-        aux->hIzq=insertar(aux->hIzq, val,  codigoPasillo,  codigoProducto,  codigoMarca,  nombre, cantidadStock, canastaB);
+        aux->hIzq=insertar(aux->hIzq, val,  codigoPasillo,  codigoProducto,  codigoMarca,  nombre, cantidadStock, canastaB, impuesto);
     }
     else if (val>aux->valor){
-        aux->hDer=insertar(aux->hDer, val,  codigoPasillo,  codigoProducto,  codigoMarca,  nombre, cantidadStock, canastaB);
+        aux->hDer=insertar(aux->hDer, val,  codigoPasillo,  codigoProducto,  codigoMarca,  nombre, cantidadStock, canastaB, impuesto);
     }
     else {
         cout<<"Repetido"<<endl;
@@ -146,7 +147,11 @@ void AA::cargarInventario(string pNombreArchivo){
         codigo = stoi (codigoS);
         pnodoAA aux = buscarNodoAA(codigo);
         if (aux==NULL){
-            insertar(codigo, codigoPasillo, codigoProducto, codigoMarca, nombre, cantidadStock, canastaB);
+            if (!canastaB==1){
+                insertar(codigo, codigoPasillo, codigoProducto, codigoMarca, nombre, cantidadStock, 0, 1);
+            }else{
+                insertar(codigo, codigoPasillo, codigoProducto, codigoMarca, nombre, cantidadStock, 1, 13);
+            }
         }
     }
     archivo.close();

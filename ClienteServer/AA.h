@@ -26,13 +26,15 @@ class nodoAA {
     string nombre;
     int cantidadStock;
     int canastaB;
+    float impuesto;
+
 };
 typedef nodoAA *pnodoAA;
 
 class AA{
 private:
     nodoAA *raiz;
-    pnodoAA insertar(pnodoAA t, int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB);
+    pnodoAA insertar(pnodoAA t, int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB,float impuesto);
     pnodoAA giro(pnodoAA aux);
     pnodoAA reparto(pnodoAA aux);
     pnodoAA rotarDerecha(pnodoAA aux);
@@ -45,7 +47,7 @@ public:
     AA() { raiz = NULL; }
     void Postorden();
     void Inorden();
-    void insertar(int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB);
+    void insertar(int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB,float impuesto);
     pnodoAA buscarNodoAA(int valor);
 };
 #endif
