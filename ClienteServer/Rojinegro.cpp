@@ -16,12 +16,13 @@ void RBTree::rellenarGondolaRN (NodePtr raiz, int codigoPasillo, int codigoProdu
     while (true){
         cout<<"Digite la cantidad de existencias a tomar del inventario para colocar en gondola: ";
         cin>>recarga;
-        if(cin.fail())
+        if(cin.fail()||recarga<1)
         {
-            cout<<"La cantidad de existencias a tomar debe ser un numero entero"<<endl;
+            cout<<"La cantidad de existencias a tomar debe ser un numero entero positivo"<<endl;
             cin.clear();
             cin.ignore(256,'\n');
-        }else
+        }
+        else
         {
             break;
         }

@@ -156,3 +156,37 @@ void AA::cargarInventario(string pNombreArchivo){
     }
     archivo.close();
 }
+
+void AA::rellenarInventario(){
+    rellenarInventario(this->raiz);
+}
+
+void AA::rellenarInventario(pnodoAA raiz)
+{
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        rellenarInventario(raiz->hDer);
+        rellenarInventario(raiz->hIzq);
+        if (raiz->cantidadStock<20){
+            int cantidad;
+            cout<<"Solo quedan ";
+            cout<<raiz->cantidadStock;
+            cout<<" existencias de la marca "+raiz->nombre+" en el inventario"<<endl;
+            while (true){
+                cout<<"Digite la cantidad de productos a comprar para guardar en el inventario: ";
+                cin>>cantidad;
+                if(cin.fail()||cantidad<1)
+                {
+                    cout<<"Opcion invalida, se deben recargar numeros enteros positivos"<<endl;
+                }else{
+                    break;
+                }
+            }
+            raiz->cantidadStock+=cantidad;
+            cout<<"Carga exitosa"<<endl;
+        }
+    }
+}

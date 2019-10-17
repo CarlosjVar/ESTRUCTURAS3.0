@@ -44,6 +44,8 @@ private:
     pnodoAA buscarNodoAA(pnodoAA pRaiz,int valor);
 public:
     void cargarInventario(string pNombreArchivo);
+    void rellenarInventario ();
+    void rellenarInventario (pnodoAA raiz);
     AA() { raiz = NULL; }
     void Postorden();
     void Inorden();
