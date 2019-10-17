@@ -1,5 +1,5 @@
 #include "menu.h"
-
+#include "mycliente.h"
 void Menu::menu()
 //In:Binario B1mercado,inventario inventario,listaClientes clientes
 //Out:None
@@ -27,14 +27,16 @@ void Menu::menu()
         return;
     }
     if (opcion==1)
-//        if(espera->ColaVacia())
-//        {
-//            cout<<"La cola de clientes est� vac�a"<<endl;
-//        }
-//        else
-//        {
-//        }
-        cout<<"Opcion de facturar"<<endl;
+        if(colaclientes.ColaVacia())
+        {
+            cout<<"La cola de clientes est� vac�a"<<endl;
+        }
+        else
+        {
+            Mycliente asd;
+            asd.FacturarCliente();
+        }
+
     else if(opcion==2)
     {
         supermercado.rellenarGondolaBinario(inventario);

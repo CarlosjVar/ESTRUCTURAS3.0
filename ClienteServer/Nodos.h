@@ -72,6 +72,7 @@ private:
 friend class listasort;
 friend class PilaC;
 friend class Menu;
+friend class Mycliente;
 };
 typedef nodoCompra*conodo;
 
@@ -88,6 +89,7 @@ private:
     nodoCompra*primero;
     nodoCompra*actual;
     friend class Menu;
+    friend class Mycliente;
 };
 class nodoCliente{
     ///Nodo que guarda la informaci�n de los clientes
@@ -147,8 +149,27 @@ private:
     nodoCliente*actual;
     friend class Menu;
     friend class Mycliente;
+
 };
+class listasort {
+    ///Lista obtenida de internet que se encarga de sortear elementos
+ private:
+  conodo first;
 
-
-
+ public:
+  listasort() { this->first = NULL; }
+  bool empty() { return this->first == NULL; }
+  void insert(string pasillo,string producto,string marca,string nombre,int cantidad);
+  void print();
+  void sort();
+  void mergeSort(nodoCompra **headRef);
+  void frontBackSplit(nodoCompra *source, nodoCompra **frontRef, nodoCompra **backRef);
+    nodoCompra*sortedMerge(nodoCompra *a, nodoCompra *b);
+    friend class Menu;
+    friend class Mycliente;
+};
+void MergeSort(nodoCompra** headRef);
+nodoCompra* SortedMerge(nodoCompra* a, nodoCompra* b);
+void FrontBackSplit(nodoCompra* source,
+                    nodoCompra** frontRef, nodoCompra** backRef);
 #endif

@@ -166,6 +166,17 @@ void Mycliente::readyRead()
             {
                 if(aux->cedula==std::to_string(cedula))
                 {
+                    std::cout<<aux->nombre<<std::endl;
+                    nodoCompra*prod=aux->carrito->primero;
+                    while(prod!=nullptr)
+                    {
+                        if(prod->nombre==marca->nombre)
+                        {
+                            prod->cantidad=prod->cantidad+cantidad;
+                            return;
+                        }
+                        prod=prod->siguiente;
+                    }
                     aux->carrito->InsertarInicio(std::to_string(pasillo),std::to_string(productoi),std::to_string(marcaI),marca->nombre,cantidad);
                     aux=aux->siguiente;
                 }
@@ -189,7 +200,7 @@ if (cliente!=nullptr)
 {
     socket->write("LOS");
     PilaC*carrito=new PilaC;
-    colaclientes.insertarFinal(cedula,cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),cliente->obtenerDato(k,3),carrito,0);
+    colaclientes.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),carrito,0);
 }
 else
 {
@@ -275,4 +286,55 @@ string Mycliente::inordenMandarM(NodePtr nodo)
         aux+=inordenMandarM(nodo->right);
         return aux;
     }
+}
+void Mycliente::FacturarCliente()
+///In:listaDCPas super,inventario inventariop
+///Out:None
+///Funci�n: Se encarga de realizar facturas en funci�n de la pila de productos del cliente, esta pila pasa a una lista, la cual se ordena con quicksort para luego ser recorrida con el fin de poner cada producto en la factura
+{
+    float totalT
+    ;
+    clienodo atendido=colaclientes.obtenercliente();
+    listasort ordenada;
+    while(atendido->carrito->primero!=NULL)
+    {
+        conodo inserto=atendido->carrito->primero;
+        ordenada.insert(inserto->pasillo,inserto->producto,inserto->marca,inserto->nombre,inserto->cantidad);
+        atendido->carrito->primero=atendido->carrito->primero->siguiente;
+
+    }
+    MergeSort(&ordenada.first);
+    ofstream outfile(atendido->cedula+".txt",ios_base::app);
+    outfile<<"Cedula: "<<atendido->cedula<<"-"<<atendido->facturas<<endl;
+    outfile<<"Nombre: "<<atendido->nombre<<endl;
+    outfile<<"Número: "<<atendido->telefono<<"\n \n"<<endl;
+    conodo item=ordenada.first;
+    while(item!=NULL)
+    {
+        int precios=precio(item);
+        string codigo=item->pasillo+item->producto+item->marca;
+        nodoAA*impuesto=inventario.buscarNodoAA(inventario.raiz,stoi(codigo));
+        cout<<"Impuesto"<<impuesto->impuesto<<endl;
+        int total=precios*item->cantidad;
+        float aplic=total*(impuesto->canastaB/100);
+        outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
+        cout<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
+        totalT=totalT+total+aplic;
+        item=item->siguiente;
+    }
+//            listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+//            listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+    outfile<<"                      Total a pagar: "<<totalT<<"\n \n \n \n"<<endl;
+    outfile.close();
+    colaclientes.BorrarInicio();
+    return;
+}
+int Mycliente::precio(conodo compremix)
+{
+    pNodoBinario pas=buscarNodo(supermercado.raiz,stoi(compremix->pasillo));
+    pNodoBinarioAVL pro=buscarNodoAVL(pas->productos,stoi(compremix->producto));
+    RBTree rojo=RBTree(pro->marcas);
+    NodePtr marca=rojo.searchTree(stoi(compremix->marca));
+    return marca->precio;
+
 }
