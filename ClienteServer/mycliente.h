@@ -21,6 +21,8 @@ public:
    string inordenMandar(pNodoBinario nodo);
    string inordenMandarP(pNodoBinarioAVL nodo);
    string inordenMandarM(NodePtr nodo);
+   void static FacturarCliente();
+   int static precio(conodo compremix);
 signals:
 
 public slots:

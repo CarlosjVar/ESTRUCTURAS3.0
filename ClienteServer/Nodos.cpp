@@ -90,22 +90,6 @@ if (PilaVacia())
    else
      primero=new nodoCompra ( pasillop, productop, marcap, nombrep, pcantidad,primero);
 }
-class listasort {
-    ///Lista obtenida de internet que se encarga de sortear elementos
- private:
-  conodo first;
-
- public:
-  listasort() { this->first = NULL; }
-  bool empty() { return this->first == NULL; }
-  void insert(string pasillo,string producto,string marca,string nombre,int cantidad);
-  void print();
-  void sort();
-  void mergeSort(nodoCompra **headRef);
-  void frontBackSplit(nodoCompra *source, nodoCompra **frontRef, nodoCompra **backRef);
-    nodoCompra*sortedMerge(nodoCompra *a, nodoCompra *b);
-    friend class Menu;
-};
 
 void listasort::insert(string pasillo,string producto,string marca,string nombre,int cantidad) {
     ///Simple inserci�n en una lista
@@ -182,3 +166,72 @@ else
    }
 
 }
+void FrontBackSplit(nodoCompra* source,
+                    nodoCompra** frontRef, nodoCompra** backRef)
+/// Parte la lista en 2 mitades, la del inicio y la de la mitad
+{
+    nodoCompra* fast;
+    nodoCompra* slow;
+    slow = source;
+    fast = source->siguiente;
+
+    /* Advance 'fast' two nodes, and advance 'slow' one node */
+    while (fast != NULL) {
+        fast = fast->siguiente;
+        if (fast != NULL) {
+            slow = slow->siguiente;
+            fast = fast->siguiente;
+        }
+    }
+
+    /* 'slow' is before the midpoint in the list, so split it in two
+    at that point. */
+    *frontRef = source;
+    *backRef = slow->siguiente;
+    slow->siguiente = NULL;
+}
+nodoCompra* SortedMerge(nodoCompra* a, nodoCompra* b)
+/// Mueve las direcciones de siguiente para ajustar la lista y sortearla
+{
+    nodoCompra* result = NULL;
+
+    /* Base cases */
+    if (a == NULL)
+        return (b);
+    else if (b == NULL)
+        return (a);
+
+    /* Pick either a or b, and recur */
+    if (a->cantidad >= b->cantidad) {
+        result = a;
+        result->siguiente = SortedMerge(a->siguiente, b);
+    }
+    else {
+        result = b;
+        result->siguiente = SortedMerge(a, b->siguiente);
+    }
+    return (result);
+}
+void MergeSort(nodoCompra** headRef)
+{
+    nodoCompra* head = *headRef;
+    nodoCompra* a;
+    nodoCompra* b;
+
+    /* Base case -- length 0 or 1 */
+    if ((head == NULL) || (head->siguiente == NULL)) {
+        return;
+    }
+
+    /* Split head into 'a' and 'b' sublists */
+    FrontBackSplit(head, &a, &b);
+
+    /* Recursively sort the sublists */
+    MergeSort(&a);
+    MergeSort(&b);
+
+    /* answer = merge the two sorted lists together */
+    *headRef = SortedMerge(a, b);
+}
+
+
