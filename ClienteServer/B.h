@@ -8,6 +8,14 @@
 using namespace std;
 
 using datosCliente = string[4];
+// 0: nombre
+// 1: codigoCiudad
+// 2: telefono
+// 3: correo
+using estadisticasCliente = int[3];
+// 0: numero de facturas
+// 1: factura de mayor monto
+// 2: acumulado de compras
 typedef int tipoClave;
 class Pagina;
 typedef Pagina *pPagina;
@@ -18,6 +26,7 @@ protected:
     pPagina *ramas;
     int cuenta;
     datosCliente *clientes;
+    estadisticasCliente* eClientes;
 
 private:
     int max;
@@ -26,6 +35,7 @@ public:
     {
         this->max = orden;
         this->claves = new tipoClave[orden];
+        this->eClientes = new estadisticasCliente[orden];
         this->clientes = new datosCliente[orden];
         this->ramas = new pPagina[orden];
         for(int i = 0; i <= orden; i++)
@@ -35,6 +45,8 @@ public:
     }
     string obtenerDato (int y,int dato) {return this->clientes[y][dato];}
     void cambiarDato (int numCliente, int numDato , string dato) {this->clientes[numCliente][numDato] = dato;}
+    int obtenerEstadistica (int y,int dato) {return this->eClientes[y][dato];}
+    void cambiarEstadistica (int numCliente, int numDato , int dato) {this->eClientes[numCliente][numDato] = dato;}
     bool nodoLleno() { return (this->cuenta == this->max - 1); }
     bool nodoSemiVacio() { return (this->cuenta < this->max / 2); }
     tipoClave obtenerClave(int i) { return this->claves[i]; }
