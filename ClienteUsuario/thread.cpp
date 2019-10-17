@@ -181,7 +181,7 @@ void Thread::comprar()
     int pasi;
     while(true)
     {
-        cout<<"Eliga un pasillo";
+        cout<<"Eliga un pasillo: ";
         cin>>pasi;
         if(!cin.fail())
         {
@@ -208,7 +208,7 @@ void Thread::comprar()
     int produ;
     while(true)
     {
-        cout<<"Eliga un producto";
+        cout<<"Eliga un producto: ";
         cin>>produ;
         if(!cin.fail())
         {

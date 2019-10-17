@@ -31,12 +31,12 @@ void NodoBinario::InsertaBinario(int num,string nombre)
         }
     }
 }
-void ColaS::insertarFinal(string pcedula,string pnombre,string ptelefono,string pcorreo,PilaC*carrito,int facturas)
+void ColaS::insertarFinal(string pcedula,string pnombre,string ptelefono,string pcorreo,PilaC*carrito,int facturas,qintptr desc)
 ///Funci�n que inserta al final de la cola
 {
     if (ColaVacia())
     {
-    primero = new nodoCliente(pcedula,pnombre,ptelefono,pcorreo);
+    primero = new nodoCliente(pcedula,pnombre,ptelefono,pcorreo,desc);
     primero->carrito=carrito;
     primero->facturas=facturas;
     }
@@ -44,7 +44,7 @@ void ColaS::insertarFinal(string pcedula,string pnombre,string ptelefono,string 
      { clienodo aux = primero;
         while ( aux->siguiente != NULL)
           aux= aux->siguiente;
-        aux->siguiente=new nodoCliente(pcedula,pnombre,ptelefono,pcorreo);
+        aux->siguiente=new nodoCliente(pcedula,pnombre,ptelefono,pcorreo,desc);
         aux->siguiente->carrito=carrito;
         aux->siguiente->facturas=facturas;
 

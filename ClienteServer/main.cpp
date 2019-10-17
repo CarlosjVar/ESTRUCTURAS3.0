@@ -8,6 +8,7 @@ ArbolB administradores=ArbolB(5);
 Binario supermercado;
 AA inventario=AA();
 ColaS colaclientes;
+QList<Mycliente*> lisSock;
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);

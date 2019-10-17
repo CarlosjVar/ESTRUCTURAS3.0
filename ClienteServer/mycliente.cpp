@@ -190,6 +190,10 @@ void Mycliente::write(QByteArray data)
         // Must always be called on thread 1
         this->socket->write(data);
 }
+void Mycliente::enviov(QByteArray data)
+{
+    this->socket->write(data);
+}
 void Mycliente::conectadoE(QByteArray data)
 {
 std::string cedula=data.toStdString().substr(2,7);
@@ -198,9 +202,10 @@ int k;
 cliente=clientes.buscar(std::stoi(cedula),k);
 if (cliente!=nullptr)
 {
+    cout<<this->socket->socketDescriptor()<<endl;
     socket->write("LOS");
     PilaC*carrito=new PilaC;
-    colaclientes.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),carrito,0);
+    colaclientes.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),carrito,0,this->socket->socketDescriptor());
 }
 else
 {
@@ -248,8 +253,9 @@ string Mycliente::inordenMandar(pNodoBinario nodo)
             return "";
     }else
     {   string aux;
+        aux.append("Nombre: ");
         aux.append(nodo->nombre);
-        aux.append(" ");
+        aux.append(" Codigo: ");
         aux.append(std::to_string(nodo->valor));
         aux.append("\n");
         aux+=inordenMandar(nodo->Hizq);
@@ -263,8 +269,9 @@ string Mycliente::inordenMandarP(pNodoBinarioAVL nodo)
             return "";
     }else
     {   string aux;
+        aux.append("Nombre: ");
         aux.append(nodo->nombre);
-        aux.append(" ");
+        aux.append(" Codigo: ");
         aux.append(std::to_string(nodo->valor));
         aux.append("\n");
         aux+=inordenMandarP(nodo->Hizq);
@@ -278,9 +285,12 @@ string Mycliente::inordenMandarM(NodePtr nodo)
             return "";
     }else
     {   string aux;
+        aux.append("Nombre: ");
         aux.append(nodo->nombre);
-        aux.append(" ");
+        aux.append(" Codigo: ");
         aux.append(std::to_string(nodo->data));
+        aux.append("Precio: ");
+        aux.append(std::to_string(nodo->precio));
         aux.append("\n");
         aux+=inordenMandarM(nodo->left);
         aux+=inordenMandarM(nodo->right);
@@ -292,8 +302,10 @@ void Mycliente::FacturarCliente()
 ///Out:None
 ///Funci�n: Se encarga de realizar facturas en funci�n de la pila de productos del cliente, esta pila pasa a una lista, la cual se ordena con quicksort para luego ser recorrida con el fin de poner cada producto en la factura
 {
-    float totalT
-    ;
+    connect(this,SIGNAL(envio(QByteArray)),this,SLOT(enviov(QByteArray)));
+    float totalT;
+    string enviar;
+    enviar.append("FA");
     clienodo atendido=colaclientes.obtenercliente();
     listasort ordenada;
     while(atendido->carrito->primero!=NULL)
@@ -306,26 +318,54 @@ void Mycliente::FacturarCliente()
     MergeSort(&ordenada.first);
     ofstream outfile(atendido->cedula+".txt",ios_base::app);
     outfile<<"Cedula: "<<atendido->cedula<<"-"<<atendido->facturas<<endl;
+    enviar=enviar+"Cedula"+atendido->cedula+"-"+std::to_string(atendido->facturas)+"\n";
     outfile<<"Nombre: "<<atendido->nombre<<endl;
-    outfile<<"Número: "<<atendido->telefono<<"\n \n"<<endl;
+    enviar=enviar+"Nombre: "+atendido->nombre+"\n";
+    outfile<<"Número: "<<atendido->telefono<<"\n"<<endl;
+    enviar=enviar+"Numero: "+atendido->telefono+"\n";
+    outfile<<"Correo: "<<atendido->correo<<"\n \n"<<endl;
+    enviar=enviar+"Correo: "+atendido->correo+"\n \n";
     conodo item=ordenada.first;
+
     while(item!=NULL)
     {
         int precios=precio(item);
         string codigo=item->pasillo+item->producto+item->marca;
         nodoAA*impuesto=inventario.buscarNodoAA(inventario.raiz,stoi(codigo));
-        cout<<"Impuesto"<<impuesto->impuesto<<endl;
         int total=precios*item->cantidad;
-        float aplic=total*(impuesto->canastaB/100);
-        outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
-        cout<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
-        totalT=totalT+total+aplic;
+        cout<<"total"<<total<<endl;
+        if(impuesto->canastaB==1)
+        {
+            float aplic=total*(impuesto->impuesto/100);
+            outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
+            enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
+            totalT=totalT+total+aplic;
+        }
+        else
+        {
+            float aplic=total*0.1f;
+            outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
+            cout<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
+            enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
+            totalT=totalT+total+aplic;
+        }
         item=item->siguiente;
     }
 //            listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
 //            listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
     outfile<<"                      Total a pagar: "<<totalT<<"\n \n \n \n"<<endl;
     outfile.close();
+    QList<Mycliente*>::iterator i;
+    foreach (Mycliente*sok,lisSock)
+    {
+        cout<<"Socket: "<<sok->socket->socketDescriptor()<<" Este cliente: "<<atendido->socket<<endl;
+        if(sok->socket->socketDescriptor()==atendido->socket)
+        {
+            QByteArray asd;
+            emit envio(asd);
+        }
+    }
+
     colaclientes.BorrarInicio();
     return;
 }

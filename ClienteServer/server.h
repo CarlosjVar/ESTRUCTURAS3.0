@@ -17,6 +17,7 @@ protected:
     void incomingConnection(qintptr handle) override;
 private:
     QThreadPool*pool;
+
 };
 
 #endif // SERVER_H

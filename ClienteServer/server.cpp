@@ -19,4 +19,5 @@ void Server::incomingConnection(qintptr handle)
 {
     Mycliente*cliente=new Mycliente(this);
     cliente->SetSocket(handle);
+    lisSock.append(cliente);
 }

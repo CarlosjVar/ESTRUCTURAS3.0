@@ -15,6 +15,7 @@ class adminThread:public QThread
 public:
     adminThread(QObject*parent=nullptr);
     void run();
+    void FacturarCliente();
 };
 
 #endif // ADMINTHREAD_H

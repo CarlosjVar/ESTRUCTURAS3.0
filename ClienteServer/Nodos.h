@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include "Rojinegro.h"
+#include <QObject>
 using namespace std;
 
 class NodoBinarioAVL {
@@ -94,7 +95,7 @@ private:
 class nodoCliente{
     ///Nodo que guarda la informaci�n de los clientes
 public:
-    nodoCliente(string pcedula,string pnombre,string ptelefono,string pcorreo){
+    nodoCliente(string pcedula,string pnombre,string ptelefono,string pcorreo,qintptr desc){
     cedula=pcedula;
     nombre=pnombre;
     telefono=ptelefono;
@@ -105,8 +106,9 @@ public:
     facturas=0;
     total=0;
     mayor=0;
+    socket=desc;
     }
-    nodoCliente(string pcedula,string pnombre,string ptelefono,string pcorreo,int pmayor)
+    nodoCliente(string pcedula,string pnombre,string ptelefono,string pcorreo,int pmayor,qintptr desc)
     {
     cedula=pcedula;
     nombre=pnombre;
@@ -118,6 +120,7 @@ public:
     facturas=0;
     total=0;
     mayor=pmayor;
+    socket=desc;
     }
 private:
     string cedula;
@@ -130,6 +133,7 @@ private:
     PilaC*carrito;
     int total;
     int mayor;
+    qintptr socket;
     friend class Menu;
     friend class ColaS;
     friend class Mycliente;
@@ -139,7 +143,7 @@ class ColaS{
     ///Cola encargada de hacer de cola de espera del supermercado
 public:
     ColaS(){primero=actual=NULL;}
-    void insertarFinal(string pcedula,string pnombre,string ptelefono,string pcorreo,PilaC*carrito,int facturas);
+    void insertarFinal(string pcedula,string pnombre,string ptelefono,string pcorreo,PilaC*carrito,int facturas,qintptr desc);
     void BorrarInicio();
     bool ColaVacia(){return primero==NULL;};
     clienodo obtenercliente();
