@@ -50,9 +50,18 @@ void SocketTest::readyRead()
            this->conectado=false;
          }
      }
+     else if(data.toStdString().substr(0,2)=="BC")
+     {
+         this->concalma=true;
+     }
+     else if(data.toStdString().substr(0,2)=="UC")
+     {
+         this->concalma=false;
+     }
      else if(data.toStdString().substr(0,2)=="FA")
      {
          std::cout<<data.toStdString().substr(2,data.toStdString().length()-2);
+         this->cola=false;
      }
      else if(data.toStdString().substr(0,2)=="RG")
      {

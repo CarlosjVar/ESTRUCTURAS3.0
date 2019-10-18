@@ -20,6 +20,10 @@ void Server::incomingConnection(qintptr handle)
     Mycliente*cliente=new Mycliente(this);
     cliente->SetSocket(handle);
     this->sockets.append(cliente);
+    if(concalma)
+    {
+        cliente->write("BC");
+    }
 }
 void Server::facturaV(qintptr*socket,QByteArray data)
 {
@@ -29,5 +33,21 @@ void Server::facturaV(qintptr*socket,QByteArray data)
        {
            sok->write(data);
        }
+    }
+}
+void Server::blockall()
+{
+    this->concalma=true;
+    foreach(Mycliente*sok,this->sockets)
+    {
+        sok->write("BC");
+    }
+}
+void Server::unblockall()
+{
+    this->concalma=false;
+    foreach(Mycliente*sok,this->sockets)
+    {
+        sok->write("UC");
     }
 }

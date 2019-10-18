@@ -126,19 +126,48 @@ void Thread::menu()
         cin>>opc;
         if(opc=="1")
         {
+            if(socket.concalma)
+            {
+                cout<<"En mantenimiento"<<endl;
+            }
+            else
+            {
             consultapre();
+            }
         }
         else if(opc=="2")
         {
+            if(socket.concalma)
+            {
+                cout<<"En mantenimiento"<<endl;
+            }
+            else
+            {
 
+            }
         }
         else if(opc=="3")
         {
+            if(socket.concalma)
+            {
+                cout<<"En mantenimiento"<<endl;
+            }
+            else
+            {
+
+            }
 
         }
         else if(opc=="4")
         {
+            if(socket.concalma)
+            {
+            cout<<"En mantenimiento"<<endl;
+            }
+            else
+            {
             compra1();
+            }
         }
         else if(opc=="5")
         {
@@ -161,7 +190,11 @@ void Thread::consultapre()
         {
             cout<<"Eliga un pasillo: ";
             cin>>pasi;
-            if(!cin.fail())
+            if(socket.concalma)
+            {
+                cout<<"Servidor en mantenimiento"<<endl;
+            }
+            else if(!cin.fail())
             {
                 break;
             }
@@ -188,7 +221,11 @@ void Thread::consultapre()
         {
             cout<<"Eliga un producto: ";
             cin>>produ;
-            if(!cin.fail())
+            if(socket.concalma)
+            {
+                cout<<"Servidor en mantenimiento"<<endl;
+            }
+            else if(!cin.fail())
             {
                 break;
             }
@@ -218,7 +255,12 @@ void Thread::consultapre()
         {
             cout<<"Eliga una marca: ";
             cin>>marca;
-            if(!cin.fail())
+            cout<<socket.concalma<<endl;
+            if(socket.concalma)
+            {
+                cout<<"Servidor en mantenimiento"<<endl;
+            }
+            else if(!cin.fail())
             {
                 break;
             }
@@ -245,6 +287,12 @@ void Thread::compra1()
 {
     string anadir="AD";
 
+    if(socket.cola)
+    {
+        cout<<"Cliente ya en cola"<<endl;
+        return;
+
+    }
     while(true)
     {
         std::cout<<"Que desea hacer: \n 1:Comprar \n 2:Pasar al carrito \n Opcion: "<<std::endl;
@@ -256,7 +304,8 @@ void Thread::compra1()
         }
         else if(respuesta=="2")
         {
-            anadir.append(std::to_string(socket.getCed()));
+            socket.cola=true;
+            anadir.append(std::to_string(socket.cedula));
             emit WriteByte(QByteArray::fromStdString(anadir));
             break;
         }
@@ -275,7 +324,11 @@ void Thread::comprar()
     {
         cout<<"Eliga un pasillo: ";
         cin>>pasi;
-        if(!cin.fail())
+        if(socket.concalma)
+        {
+            cout<<"Servidor en mantenimiento"<<endl;
+        }
+        else if(!cin.fail())
         {
             break;
         }
@@ -302,7 +355,11 @@ void Thread::comprar()
     {
         cout<<"Eliga un producto: ";
         cin>>produ;
-        if(!cin.fail())
+        if(socket.concalma)
+        {
+            cout<<"Servidor en mantenimiento"<<endl;
+        }
+        else if(!cin.fail())
         {
             break;
         }
@@ -332,7 +389,11 @@ void Thread::comprar()
     {
         cout<<"Eliga una marca: ";
         cin>>marca;
-        if(!cin.fail())
+        if(socket.concalma)
+        {
+            cout<<"Servidor en mantenimiento"<<endl;
+        }
+        else if(!cin.fail())
         {
             break;
         }
@@ -363,7 +424,11 @@ void Thread::comprar()
     {
         cout<<"Digite cuantos productos desea llevar: ";
         std::cin>>cantidad;
-        if(!cin.fail())
+        if(socket.concalma)
+        {
+            cout<<"Servidor en mantenimiento"<<endl;
+        }
+        else if(!cin.fail())
         {
             break;
         }

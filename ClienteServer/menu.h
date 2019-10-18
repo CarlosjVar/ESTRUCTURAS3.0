@@ -44,6 +44,8 @@ void FacturarCliente();
 int precio(conodo compremix);
 signals:
     void enviart(qintptr*s,QByteArray data);
+    void blockAll();
+    void unBlockAll();
 
 private:
 //    listasort listaventasG;

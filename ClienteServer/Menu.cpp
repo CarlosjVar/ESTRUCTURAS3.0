@@ -3,6 +3,8 @@
 Menu::Menu(QObject*parent)
 {
     connect(this,SIGNAL(enviart(qintptr* ,QByteArray )),&servidor,SLOT(facturaV(qintptr* ,QByteArray )));
+    connect(this,SIGNAL(blockAll()),&servidor,SLOT(blockall()));
+    connect(this,SIGNAL(unBlockAll()),&servidor,SLOT(unblockall()));
 }
 void Menu::menu()
 //In:Binario B1mercado,inventario inventario,listaClientes clientes
@@ -43,7 +45,9 @@ void Menu::menu()
 
     else if(opcion==2)
     {
+        emit blockAll();
         supermercado.rellenarGondolaBinario(inventario);
+        emit unBlockAll();
     }
     else if (opcion==3)
     {
@@ -58,15 +62,21 @@ void Menu::menu()
     }
     else if(opcion==5)
     {
+        emit blockAll();
         menuAgregar();
+        emit unBlockAll();
     }
     else if(opcion==6)
     {
+        emit blockAll();
         menuModificar();
+        emit unBlockAll();
     }
     else if(opcion==7)
     {
+       emit blockAll();
        menuConsultar();
+       emit unBlockAll();
     }
     else if(opcion==0)
     {
@@ -972,12 +982,14 @@ void Menu::FacturarCliente()
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
             totalT=totalT+total+aplic;
         }
+        listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+        listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
         item=item->siguiente;
     }
-//            listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
-//            listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+
     outfile<<"                      Total a pagar: "<<totalT<<"\n \n \n \n"<<endl;
     outfile.close();
+    cout<<atendido->socket<<endl;
     emit enviart(&atendido->socket,QByteArray::fromStdString(enviar));
     colaclientes.BorrarInicio();
     return;

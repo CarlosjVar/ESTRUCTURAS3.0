@@ -9,4 +9,6 @@ extern Binario supermercado;
 extern AA inventario;
 extern ColaS colaclientes;
 extern ColaS clienteslog;
+extern listasort listaventasG;
+extern listasort listaventasI;
 #endif // GLOBALES_H

@@ -17,9 +17,12 @@ protected:
     void incomingConnection(qintptr handle) override;
 public slots:
     void facturaV(qintptr*socket,QByteArray data);
+    void blockall();
+    void unblockall();
 private:
     QThreadPool*pool;
     QList <Mycliente*> sockets;
+    bool concalma;
 
 };
 

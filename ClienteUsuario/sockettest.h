@@ -36,7 +36,9 @@ private:
     bool paInv=false;
     bool proInv=false;
     bool marInv=false;
+    bool cola=false;
     int cedula;
+    bool concalma;
 friend class Thread;
 };
 

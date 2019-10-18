@@ -36,7 +36,18 @@ void Mycliente::readyRead()
     }
     else if(data.toStdString().substr(0,2)=="AD")
     {
+        string ced=data.toStdString().substr(2,data.toStdString().length()-2);
+        clienodo aux=clienteslog.primero;
+        while(aux!=nullptr)
+        {
+            if(aux->cedula==ced)
+            {
+                colaclientes.insertarFinal(aux->cedula,aux->nombre,aux->telefono,aux->correo,aux->carrito,0,aux->socket);
+                cout<<"agregado"<<endl;
 
+            }
+                aux=aux->siguiente;
+        }
     }
     else if(data.toStdString().substr(0,2)=="CO")
     {
