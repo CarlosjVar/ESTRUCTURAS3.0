@@ -47,13 +47,13 @@ void Menu::menu()
     {
         emit blockAll();
         supermercado.rellenarGondolaBinario(inventario);
+        cout<<"No hay gondolas que requieran rellenado, o no quedan gondolas por rellenar"<<endl;
         emit unBlockAll();
     }
     else if (opcion==3)
     {
-        //rellenarInventario(inventario, listaventasI);
-        //listaventasI.first=NULL;
-        cout<<"Opcion de revisar inventario"<<endl;
+        inventario.rellenarInventario();
+        cout<<"Ya se han verificado las reservas de todas las marcas"<<endl;
     }
     else if(opcion==4)
     {
