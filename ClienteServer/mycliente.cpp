@@ -10,6 +10,8 @@ void Mycliente::SetSocket(qintptr Desc)
     connect(socket,SIGNAL(connected()),this,SLOT(connected()));
     connect(socket,SIGNAL(disconnected()),this,SLOT(disconnected()));
     connect(socket,SIGNAL(readyRead()),this,SLOT(readyRead()));
+
+
     socket->setSocketDescriptor(Desc);
     qDebug()<<"Cliente conectado";
 }
@@ -31,6 +33,10 @@ void Mycliente::readyRead()
     else if(data.toStdString().substr(0,2)=="RE")
     {
         registrarCliente(data);
+    }
+    else if(data.toStdString().substr(0,2)=="AD")
+    {
+
     }
     else if(data.toStdString().substr(0,2)=="CO")
     {
@@ -97,6 +103,36 @@ void Mycliente::readyRead()
                 this->write(validacion);
             }
         }
+        else if(data.toStdString().substr(2,2)=="CN")
+        {
+            string datos=data.toStdString();
+            char separador[]=";";
+            char cstr[datos.size()+1];
+            strcpy(cstr,datos.c_str());
+            char*token= strtok(cstr,separador);
+            token=strtok(nullptr,separador);
+            int pasillo=stoi(token);
+            token=strtok(nullptr,separador);
+            int productoi=stoi(token);
+            token=strtok(nullptr,separador);
+            int marcaI=stoi(token);
+            pNodoBinario raiz=supermercado.raiz;
+            pNodoBinario pasillon=buscarNodo(raiz,pasillo);
+            pNodoBinarioAVL producton=buscarNodoAVL(pasillon->productos,productoi);
+            RBTree rojo=RBTree(producton->marcas);
+            NodePtr marca=rojo.searchTree(marcaI);
+            if(marca!=nullptr)
+            {
+                string send="COCA";
+                send.append(std::to_string(marca->precio));
+                this->write(QByteArray::fromStdString(send));
+            }
+            else
+            {
+                QByteArray validacion="VAMA";
+                this->write(validacion);
+            }
+        }
         else if(data.toStdString().substr(2,2)=="CO")
         {
             string datos=data.toStdString();
@@ -118,10 +154,8 @@ void Mycliente::readyRead()
             if(marca!=nullptr)
             {
                 string send="COCO;";
-                std::cout<<marca->cantidadGondola<<std::endl;
                 string arbol=std::to_string(marca->cantidadGondola);
                 send.append(arbol);
-                std::cout<<send<<std::endl;
                 this->write(QByteArray::fromStdString(send));
             }
             else
@@ -161,7 +195,7 @@ void Mycliente::readyRead()
             {
                 marca->cantidadGondola=marca->cantidadGondola-cantidad;
             }
-            clienodo aux=colaclientes.primero;
+            clienodo aux=clienteslog.primero;
             while(aux!=nullptr)
             {
                 if(aux->cedula==std::to_string(cedula))
@@ -190,10 +224,6 @@ void Mycliente::write(QByteArray data)
         // Must always be called on thread 1
         this->socket->write(data);
 }
-void Mycliente::enviov(QByteArray data)
-{
-    this->socket->write(data);
-}
 void Mycliente::conectadoE(QByteArray data)
 {
 std::string cedula=data.toStdString().substr(2,7);
@@ -205,7 +235,7 @@ if (cliente!=nullptr)
     cout<<this->socket->socketDescriptor()<<endl;
     socket->write("LOS");
     PilaC*carrito=new PilaC;
-    colaclientes.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),carrito,0,this->socket->socketDescriptor());
+    clienteslog.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),carrito,0,this->socket->socketDescriptor());
 }
 else
 {
@@ -297,84 +327,4 @@ string Mycliente::inordenMandarM(NodePtr nodo)
         return aux;
     }
 }
-void Mycliente::FacturarCliente()
-///In:listaDCPas super,inventario inventariop
-///Out:None
-///Funci�n: Se encarga de realizar facturas en funci�n de la pila de productos del cliente, esta pila pasa a una lista, la cual se ordena con quicksort para luego ser recorrida con el fin de poner cada producto en la factura
-{
-    connect(this,SIGNAL(envio(QByteArray)),this,SLOT(enviov(QByteArray)));
-    float totalT;
-    string enviar;
-    enviar.append("FA");
-    clienodo atendido=colaclientes.obtenercliente();
-    listasort ordenada;
-    while(atendido->carrito->primero!=NULL)
-    {
-        conodo inserto=atendido->carrito->primero;
-        ordenada.insert(inserto->pasillo,inserto->producto,inserto->marca,inserto->nombre,inserto->cantidad);
-        atendido->carrito->primero=atendido->carrito->primero->siguiente;
 
-    }
-    MergeSort(&ordenada.first);
-    ofstream outfile(atendido->cedula+".txt",ios_base::app);
-    outfile<<"Cedula: "<<atendido->cedula<<"-"<<atendido->facturas<<endl;
-    enviar=enviar+"Cedula"+atendido->cedula+"-"+std::to_string(atendido->facturas)+"\n";
-    outfile<<"Nombre: "<<atendido->nombre<<endl;
-    enviar=enviar+"Nombre: "+atendido->nombre+"\n";
-    outfile<<"Número: "<<atendido->telefono<<"\n"<<endl;
-    enviar=enviar+"Numero: "+atendido->telefono+"\n";
-    outfile<<"Correo: "<<atendido->correo<<"\n \n"<<endl;
-    enviar=enviar+"Correo: "+atendido->correo+"\n \n";
-    conodo item=ordenada.first;
-
-    while(item!=NULL)
-    {
-        int precios=precio(item);
-        string codigo=item->pasillo+item->producto+item->marca;
-        nodoAA*impuesto=inventario.buscarNodoAA(inventario.raiz,stoi(codigo));
-        int total=precios*item->cantidad;
-        cout<<"total"<<total<<endl;
-        if(impuesto->canastaB==1)
-        {
-            float aplic=total*(impuesto->impuesto/100);
-            outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
-            enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
-            totalT=totalT+total+aplic;
-        }
-        else
-        {
-            float aplic=total*0.1f;
-            outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
-            cout<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
-            enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
-            totalT=totalT+total+aplic;
-        }
-        item=item->siguiente;
-    }
-//            listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
-//            listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
-    outfile<<"                      Total a pagar: "<<totalT<<"\n \n \n \n"<<endl;
-    outfile.close();
-    QList<Mycliente*>::iterator i;
-    foreach (Mycliente*sok,lisSock)
-    {
-        cout<<"Socket: "<<sok->socket->socketDescriptor()<<" Este cliente: "<<atendido->socket<<endl;
-        if(sok->socket->socketDescriptor()==atendido->socket)
-        {
-            QByteArray asd;
-            emit envio(asd);
-        }
-    }
-
-    colaclientes.BorrarInicio();
-    return;
-}
-int Mycliente::precio(conodo compremix)
-{
-    pNodoBinario pas=buscarNodo(supermercado.raiz,stoi(compremix->pasillo));
-    pNodoBinarioAVL pro=buscarNodoAVL(pas->productos,stoi(compremix->producto));
-    RBTree rojo=RBTree(pro->marcas);
-    NodePtr marca=rojo.searchTree(stoi(compremix->marca));
-    return marca->precio;
-
-}

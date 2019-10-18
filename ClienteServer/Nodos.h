@@ -74,6 +74,7 @@ friend class listasort;
 friend class PilaC;
 friend class Menu;
 friend class Mycliente;
+friend class adminThread;
 };
 typedef nodoCompra*conodo;
 
@@ -137,6 +138,7 @@ private:
     friend class Menu;
     friend class ColaS;
     friend class Mycliente;
+    friend class adminThread;
 };
 typedef nodoCliente*clienodo;
 class ColaS{

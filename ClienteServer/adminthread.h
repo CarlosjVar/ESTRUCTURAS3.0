@@ -8,6 +8,8 @@
 #include <strings.h>
 #include <QObject>
 #include "Globales.h"
+#include "menu.h"
+#include "Nodos.h"
 using namespace std;
 class adminThread:public QThread
 {
@@ -15,7 +17,8 @@ class adminThread:public QThread
 public:
     adminThread(QObject*parent=nullptr);
     void run();
-    void FacturarCliente();
+    void facturar();
+
 };
 
 #endif // ADMINTHREAD_H

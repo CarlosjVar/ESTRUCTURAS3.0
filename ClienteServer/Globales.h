@@ -8,5 +8,5 @@ extern ArbolB administradores;
 extern Binario supermercado;
 extern AA inventario;
 extern ColaS colaclientes;
-
+extern ColaS clienteslog;
 #endif // GLOBALES_H

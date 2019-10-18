@@ -118,16 +118,15 @@ void Thread::menu()
         cout<<"Bienvenido , seleccione una opción: "<<endl;
         cout<<"1 Consultar un precio "<<endl;
         cout<<"2 Consultar si un producto es de la canasta "<<endl;
-        cout<<"3 Consultar si un producto es de la canasta "<<endl;
-        cout<<"4 Consultar el precio de un producto "<<endl;
-        cout<<"5 Comprar"<<endl;
-        cout<<"6 Salir"<<endl;
+        cout<<"3 Consultar el % impuesto de un producto "<<endl;
+        cout<<"4 Comprar"<<endl;
+        cout<<"5 Salir"<<endl;
         string opc;
         cout<<"Opción: ";
         cin>>opc;
         if(opc=="1")
         {
-
+            consultapre();
         }
         else if(opc=="2")
         {
@@ -139,21 +138,112 @@ void Thread::menu()
         }
         else if(opc=="4")
         {
-
+            compra1();
         }
         else if(opc=="5")
         {
-            compra1();
-        }
-        else if(opc=="6")
-        {
             break;
         }
+
     }
 }
+void Thread::consultapre()
+
+    {
+        string consulta="CO";
+        consulta.append("PA");
+        emit WriteByte(QByteArray::fromStdString(consulta));
+        emit waitResponse(2000);
+        sleep(1);
+        consulta="CO";
+        int pasi;
+        while(true)
+        {
+            cout<<"Eliga un pasillo: ";
+            cin>>pasi;
+            if(!cin.fail())
+            {
+                break;
+            }
+            if(cin.fail())
+            {
+                cin.ignore();
+                cin.clear();
+            }
+            cin.ignore();
+            cout<<"Por favor digite un numero"<<endl;
+        }
+        consulta.append("PR;");
+        consulta.append(std::to_string(pasi));
+        emit WriteByte(QByteArray::fromStdString(consulta));
+        emit waitResponse(2000);
+        sleep(1);
+        if(socket.getpa())
+        {
+            return;
+        }
+        consulta="CO";
+        int produ;
+        while(true)
+        {
+            cout<<"Eliga un producto: ";
+            cin>>produ;
+            if(!cin.fail())
+            {
+                break;
+            }
+            if(cin.fail())
+            {
+                cin.ignore();
+                cin.clear();
+            }
+            cin.ignore();
+            cout<<"Por favor digite un numero"<<endl;
+        }
+        std::cout<<socket.getpro()<<endl;
+        consulta="CO";
+        consulta.append("MA;");
+        consulta.append(std::to_string(pasi));
+        consulta.append(";");
+        consulta.append(std::to_string(produ));
+        emit WriteByte(QByteArray::fromStdString(consulta));
+        emit waitResponse(2000);
+        sleep(1);
+        if(socket.getpro())
+        {
+            return;
+        }
+        int marca;
+        while(true)
+        {
+            cout<<"Eliga una marca: ";
+            cin>>marca;
+            if(!cin.fail())
+            {
+                break;
+            }
+            if(cin.fail())
+            {
+                cin.ignore();
+                cin.clear();
+            }
+            cin.ignore();
+            cout<<"Por favor digite un numero"<<endl;
+        }
+        consulta="CO";
+        consulta.append("CN;");
+        consulta.append(std::to_string(pasi));
+        consulta.append(";");
+        consulta.append(std::to_string(produ));
+        consulta.append(";");
+        consulta.append(std::to_string(marca));
+        emit WriteByte(QByteArray::fromStdString(consulta));
+        sleep(1);
+}
+
 void Thread::compra1()
 {
-    string anadir="ADCL";
+    string anadir="AD";
 
     while(true)
     {
@@ -166,6 +256,8 @@ void Thread::compra1()
         }
         else if(respuesta=="2")
         {
+            anadir.append(std::to_string(socket.getCed()));
+            emit WriteByte(QByteArray::fromStdString(anadir));
             break;
         }
     }

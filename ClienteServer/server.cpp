@@ -19,5 +19,15 @@ void Server::incomingConnection(qintptr handle)
 {
     Mycliente*cliente=new Mycliente(this);
     cliente->SetSocket(handle);
-    lisSock.append(cliente);
+    this->sockets.append(cliente);
+}
+void Server::facturaV(qintptr*socket,QByteArray data)
+{
+    foreach (Mycliente*sok,this->sockets)
+    {
+       if(sok->socket->socketDescriptor()==*socket)
+       {
+           sok->write(data);
+       }
+    }
 }

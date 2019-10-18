@@ -50,6 +50,7 @@ public:
     void insertar(int val, int codigoPasillo, int codigoProducto, int codigoMarca, string nombre, int cantidadStock, int canastaB,float impuesto);
     pnodoAA buscarNodoAA(int valor);
     friend class Mycliente;
+    friend class Menu;
 };
 #endif
 

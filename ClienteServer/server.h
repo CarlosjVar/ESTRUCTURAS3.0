@@ -15,8 +15,11 @@ public:
     void StartServer();
 protected:
     void incomingConnection(qintptr handle) override;
+public slots:
+    void facturaV(qintptr*socket,QByteArray data);
 private:
     QThreadPool*pool;
+    QList <Mycliente*> sockets;
 
 };
 

@@ -46,7 +46,8 @@ HEADERS += \
     adminthread.h \
     menu.h \
     mycliente.h \
-    server.h
+    server.h \
+    serverGlo.h
 
 DISTFILES += \
     Administradores.txt \

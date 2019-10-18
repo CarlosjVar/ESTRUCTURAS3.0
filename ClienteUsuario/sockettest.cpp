@@ -117,6 +117,10 @@ void SocketTest::readyRead()
              std::cout<<token<<std::endl;
 
          }
+       else if(data.toStdString().substr(2,2)=="CA")
+         {
+             std::cout<<"El precio es de: "<<data.toStdString().substr(4,data.toStdString().length()-4)<<std::endl;
+         }
      }
     else if(data.toStdString().substr(0,2)=="VA")
      {

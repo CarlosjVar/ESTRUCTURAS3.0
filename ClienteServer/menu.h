@@ -5,14 +5,19 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include "serverGlo.h"
+#include <QObject>
+#include "server.h"
+#include <QByteArray>
 
 
-class Menu{
+class Menu:public QObject{
+    Q_OBJECT
 public:
-    Menu()
-    {
+    Menu(QObject*parent=nullptr);
 
-    }
+
+
 //void rellenarInventario(inventario inven,listasort listaventas);
 //int traerInventario(inventario inventario,int solicita,conodo compra);
 //void rellenarGondolasMarc(inventario inventario,pNodoBinarioAVL pasillo,pNodoBinarioAVL producto,conodo compra);
@@ -35,6 +40,11 @@ void menuConsultar();
 void consultaPrecio();
 void consultaImpuesto();
 void consultaPertenencia();
+void FacturarCliente();
+int precio(conodo compremix);
+signals:
+    void enviart(qintptr*s,QByteArray data);
+
 private:
 //    listasort listaventasG;
 //    listasort listaventasI;

@@ -23,19 +23,19 @@ public:
    string inordenMandarP(pNodoBinarioAVL nodo);
    string inordenMandarM(NodePtr nodo);
    void  FacturarCliente();
-   int static precio(conodo compremix);
+
 signals:
-    void envio(QByteArray data);
+   void envio(qintptr socket,QByteArray data);
 public slots:
    void connected();
    void disconnected();
    void readyRead();
    void write(QByteArray Data);
-   void enviov(QByteArray data);
+
 private:
     QTcpSocket*socket;
     QThreadPool*pool;
     int cedula;
+    friend class Server;
 };
-extern QList<Mycliente*> lisSock;
 #endif // MYCLIENTE_H
