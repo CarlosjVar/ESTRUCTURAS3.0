@@ -114,6 +114,79 @@ void Mycliente::readyRead()
                 this->write(validacion);
             }
         }
+        else if(data.toStdString().substr(2,2)=="CC")
+        {
+            string datos=data.toStdString();
+            char separador[]=";";
+            char cstr[datos.size()+1];
+            strcpy(cstr,datos.c_str());
+            char*token= strtok(cstr,separador);
+            token=strtok(nullptr,separador);
+            int pasillo=stoi(token);
+            token=strtok(nullptr,separador);
+            int productoi=stoi(token);
+            token=strtok(nullptr,separador);
+            int marcaI=stoi(token);
+            pNodoBinario raiz=supermercado.raiz;
+            pNodoBinario pasillon=buscarNodo(raiz,pasillo);
+            pNodoBinarioAVL producton=buscarNodoAVL(pasillon->productos,productoi);
+            RBTree rojo=RBTree(producton->marcas);
+            NodePtr marca=rojo.searchTree(marcaI);
+            if(marca!=nullptr)
+            {
+                string send="COCC";
+                string buscar=std::to_string(pasillon->valor)+std::to_string(producton->valor)+std::to_string(marca->data);
+                nodoAA*inv=inventario.buscarNodoAA(inventario.raiz,stoi(buscar));
+                send.append(std::to_string(inv->canastaB));
+                this->write(QByteArray::fromStdString(send));
+            }
+            else
+            {
+                QByteArray validacion="VAMA";
+                this->write(validacion);
+            }
+        }
+        else if(data.toStdString().substr(2,2)=="CI")
+        {
+            string datos=data.toStdString();
+            char separador[]=";";
+            char cstr[datos.size()+1];
+            strcpy(cstr,datos.c_str());
+            char*token= strtok(cstr,separador);
+            token=strtok(nullptr,separador);
+            int pasillo=stoi(token);
+            token=strtok(nullptr,separador);
+            int productoi=stoi(token);
+            token=strtok(nullptr,separador);
+            int marcaI=stoi(token);
+            pNodoBinario raiz=supermercado.raiz;
+            pNodoBinario pasillon=buscarNodo(raiz,pasillo);
+            pNodoBinarioAVL producton=buscarNodoAVL(pasillon->productos,productoi);
+            RBTree rojo=RBTree(producton->marcas);
+            NodePtr marca=rojo.searchTree(marcaI);
+            if(marca!=nullptr)
+            {
+                string send="COCI";
+                string buscar=std::to_string(pasillon->valor)+std::to_string(producton->valor)+std::to_string(marca->data);
+                nodoAA*inv=inventario.buscarNodoAA(inventario.raiz,stoi(buscar));
+                if(inv->canastaB==0)
+                {
+                    send.append("El impuesto es de 1%");
+                }
+                else
+                {
+                    send.append("El impuesto es de: ");
+                    send.append(std::to_string(inv->impuesto));
+                    send.append("%");
+                }
+                this->write(QByteArray::fromStdString(send));
+            }
+            else
+            {
+                QByteArray validacion="VAMA";
+                this->write(validacion);
+            }
+        }
         else if(data.toStdString().substr(2,2)=="CN")
         {
             string datos=data.toStdString();
@@ -201,10 +274,12 @@ void Mycliente::readyRead()
             {
                 cantidad=marca->cantidadGondola;
                 marca->cantidadGondola=0;
+                marca->cantidadVentas=marca->cantidadVentas+cantidad;
             }
             else
             {
                 marca->cantidadGondola=marca->cantidadGondola-cantidad;
+                marca->cantidadVentas=marca->cantidadVentas+cantidad;
             }
             clienodo aux=clienteslog.primero;
             while(aux!=nullptr)
@@ -276,6 +351,7 @@ void Mycliente::registrarCliente(QByteArray data)
     Pagina* aux = clientes.buscar(cedulaS,n);
     if (aux == NULL){
         clientes.insertar(cedulaS,nombre,numero,ciudad,correo);
+        aux->cambiarEstadistica(n,0,aux->obtenerEstadistica(n,0)+1);
         socket->write("RGY");
 
     }

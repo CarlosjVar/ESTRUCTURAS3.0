@@ -48,8 +48,7 @@ signals:
     void unBlockAll();
 
 private:
-//    listasort listaventasG;
-//    listasort listaventasI;
+
 };
 
 //void Menu::agregarcarrito4(Binario super,clienodo persona,pNodoBinarioAVL pasillop,pNodoBinarioAVL productop,Node*marcap)

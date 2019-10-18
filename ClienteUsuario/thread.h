@@ -18,6 +18,9 @@ public:
     void comprar();
     void compra1();
     void consultapre();
+    void consultacanasta();
+    void consultaImp();
+    void menuN();
 signals:
     void WriteByte(QByteArray data);
     void waitResponse(int q);

@@ -982,7 +982,7 @@ void Menu::FacturarCliente()
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
             totalT=totalT+total+aplic;
         }
-        listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+        listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
         listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
         item=item->siguiente;
     }

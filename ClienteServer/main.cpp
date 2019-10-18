@@ -11,6 +11,8 @@ AA inventario=AA();
 ColaS colaclientes;
 ColaS clienteslog;
 Server servidor;
+listasort listaventasG;
+listasort listaventasI;
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);

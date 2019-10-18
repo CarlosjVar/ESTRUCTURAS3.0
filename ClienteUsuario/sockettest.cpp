@@ -88,6 +88,22 @@ void SocketTest::readyRead()
              std::string arbolbin=token;
              std::cout<<arbolbin<<std::endl;
          }
+         else if(data.toStdString().substr(2,2)=="CI")
+         {
+             std::cout<<data.toStdString().substr(4,data.toStdString().length()-4)<<std::endl;
+         }
+         else if(data.toStdString().substr(2,2)=="CC")
+         {
+             std::string canasta=data.toStdString().substr(4,data.toStdString().length()-4);
+             if(canasta=="1")
+             {
+                 std::cout<<"Pertenece a la canasta"<<std::endl;
+             }
+             else
+             {
+                 std::cout<<"No pertenece a la canasta"<<std::endl;
+             }
+         }
          else if(data.toStdString().substr(2,2)=="PR")
          {
              paInv=false;
