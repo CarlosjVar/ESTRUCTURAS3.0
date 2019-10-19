@@ -1,5 +1,19 @@
 #include "menu.h"
 #include "mycliente.h"
+
+bool esNumerico (string pstring){
+    int lim = pstring.length();
+    for (int i = 0;i<lim;i++){
+        char temp = pstring[i];
+        if(!isdigit(temp)){
+            return false;
+        }
+    }
+    return true;
+}
+
+
+
 Menu::Menu(QObject*parent)
 {
     connect(this,SIGNAL(enviart(qintptr* ,QByteArray )),&servidor,SLOT(facturaV(qintptr* ,QByteArray )));
@@ -12,8 +26,7 @@ void Menu::menu()
 //Funci�n: Men� que funciona como nexo principal entre todas las funcionalidades
 {
 
-    int opcion;
-    cout<<"Sistema de gestion del supermercado"<<endl<<"Por favor selecciones una opcion: "<<endl;
+    cout<<"***************Sistema de gestion del supermercado****************"<<endl;
     cout<<"1. Facturar"<<endl;
     cout<<"2. Revisar Gondolas"<<endl;
     cout<<"3. Verificar Inventario"<<endl;
@@ -22,21 +35,21 @@ void Menu::menu()
     cout<<"6. Modificar datos"<<endl;
     cout<<"7. Consultas"<<endl;
     cout<<"0. Salir del programa"<<endl;
-    cout<<"Opcion: ";
-    cin>>opcion;
-    cout<<" "<<endl;
-    if(cin.fail())
+    cout<<"Digite la opcion deseada: ";
+    string opcionS;
+    int opcion;
+    cin>>opcionS;
+    if(!esNumerico(opcionS))
     {
         cout<<"Opcion invalida"<<endl;
-        cin.clear();
-        cin.ignore(256,'\n');
         menu();
         return;
     }
+    opcion = stoi (opcionS);
     if (opcion==1)
         if(colaclientes.ColaVacia())
         {
-            cout<<"La cola de clientes est� vac�a"<<endl;
+            cout<<"La cola de clientes esta vacia"<<endl;
         }
         else
         {
@@ -57,8 +70,7 @@ void Menu::menu()
     }
     else if(opcion==4)
     {
-        //reportes(Supermercado,clientes,inventario);
-        cout<<"Reportes"<<endl;
+        while (menuReportes()!=1);
     }
     else if(opcion==5)
     {
@@ -94,22 +106,23 @@ void Menu::menu()
 
 
 void Menu::menuAgregar(){
-    int opcion;
-    cout<<"1. Pasillo"<<endl;
-    cout<<"2. Producto"<<endl;
-    cout<<"3. Marca"<<endl;
-    cout<<"4. Cliente"<<endl;
+    cout<<"*****************Agregar datos******************"<<endl;
+    cout<<"1. Agregar pasillo"<<endl;
+    cout<<"2. Agregar producto"<<endl;
+    cout<<"3. Agregar marca"<<endl;
+    cout<<"4. Agregar cliente"<<endl;
     cout<<"0. Volver al menu de administrador"<<endl;
     cout<<"Seleccione el dato que desea agregar: ";
-    cin>>opcion;
-    if(cin.fail())
+    string opcionS;
+    int opcion;
+    cin>>opcionS;
+    if(!esNumerico(opcionS))
     {
         cout<<"Opcion invalida"<<endl;
-        cin.clear();
-        cin.ignore(256,'\n');
         menuAgregar();
         return;
     }
+    opcion = stoi (opcionS);
     if (opcion==1)
         agregarPasillo();
     else if(opcion==2)
@@ -370,21 +383,22 @@ void Menu::agregarCliente(){
 
 
 void Menu::menuModificar(){
-    int opcion;
+    cout<<"*****************Modificacion de datos******************"<<endl;
     cout<<"1. Modificar precio"<<endl;
     cout<<"2. Modificar impuesto"<<endl;
     cout<<"3. Modificar pertenencia a la canasta"<<endl;
     cout<<"0. Volver al menu de administrador"<<endl;
-    cout<<"Seleccione una opcion: ";
-    cin>>opcion;
-    if(cin.fail())
+    cout<<"Seleccione el dato que desea modificar: ";
+    string opcionS;
+    int opcion;
+    cin>>opcionS;
+    if(!esNumerico(opcionS))
     {
         cout<<"Opcion invalida"<<endl;
-        cin.clear();
-        cin.ignore(256,'\n');
         menuModificar();
         return;
     }
+    opcion = stoi (opcionS);
     if (opcion==1)
         modificarPrecio ();
     else if(opcion==2)
@@ -671,21 +685,22 @@ void Menu::modificarPertenencia(){
 }
 
 void Menu::menuConsultar(){
-    int opcion;
-    cout<<"1. Precio de una marca"<<endl;
-    cout<<"2. Pertenencia de una marca a la canasta basica"<<endl;
-    cout<<"3. Porcentaje de impuesto de una marca"<<endl;
+    cout<<"*****************Consulta de datos******************"<<endl;
+    cout<<"1. Consultar el precio de una marca"<<endl;
+    cout<<"2. Consultar la pertenencia de una marca a la canasta basica"<<endl;
+    cout<<"3. Consultar el porcentaje de impuesto de una marca"<<endl;
     cout<<"0. Volver al menu de administrador"<<endl;
     cout<<"Seleccione el dato que desea consultar: ";
-    cin>>opcion;
-    if(cin.fail())
+    string opcionS;
+    int opcion;
+    cin>>opcionS;
+    if(!esNumerico(opcionS))
     {
         cout<<"Opcion invalida"<<endl;
-        cin.clear();
-        cin.ignore(256,'\n');
         menuConsultar();
         return;
     }
+    opcion = stoi (opcionS);
     if (opcion==1)
         consultaPrecio ();
     else if(opcion==2)
@@ -1001,7 +1016,102 @@ int Menu::precio(conodo compremix)
     RBTree rojo=RBTree(pro->marcas);
     NodePtr marca=rojo.searchTree(stoi(compremix->marca));
     return marca->precio;
+}
 
+void Menu::reportePasillos (){
+    ofstream archivo ("reportePasillos.txt");
+    string texto;
+    archivo<<"Pasillo(s) del supermercado: "<<endl;
+    supermercado.reportePasillos(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="reportePasillos";
+    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
+
+void Menu::reporteClientes() {
+    ofstream archivo ("reporteClientes.txt");
+    string texto;
+    archivo<<"Cliente(s) del supermercado: "<<endl;
+    clientes.reporteClientes(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="reporteClientes";
+    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
+
+
+
+
+//A continuacion se definen las funciones de los menus, ambas llaman a las demas funciones descritas y mantienen el ciclo de entradas
+//de ser necesario. Ademas, permiten el paso de parametros por referencia a las funciones que asi lo requieren
+int Menu::menuReportes (){
+    int opcion;
+    string opcionS;
+    cout<<"*****************Reportes******************"<<endl;
+    cout<<"1-Pasillo mas visitado"<<endl;
+    cout<<"2-Pasillo menos visitado"<<endl;
+    cout<<"3-Productos en pasillo mas vendidos"<<endl;
+    cout<<"4-Marca mas vendida"<<endl;
+    cout<<"5-Cliente que mas compro"<<endl;
+    cout<<"6-Cliente que menos compro"<<endl;
+    cout<<"7-Producto que mas se cargo en gondolas"<<endl;
+    cout<<"8-Cliente que mas facturo"<<endl;
+    cout<<"9-Marcas de un producto"<<endl;
+    cout<<"10-Factura de mayor monto"<<endl;
+    cout<<"11-Productos en un pasillo"<<endl;
+    cout<<"12-Clientes del supermercado"<<endl;
+    cout<<"13-Pasillos del supermercado"<<endl;
+    cout<<"14-Inventario del supermercado"<<endl;
+    cout<<"0-Volver al menu principal"<<endl;
+    cout<<"Digite el numero de la opcion deseada: ";
+    cin>> opcionS;
+    if (!esNumerico(opcionS)){
+        cout<<"La opcion digitada es invalida"<<endl;
+        return 0;
+    }
+    opcion = stoi (opcionS);
+    switch (opcion){
+        case 1: cout<<"reportePasilloMasVisitado();";
+        break;
+        case 2: cout<<"reportePasilloMenosVisitado();";
+        break;
+        case 3: cout<<"reporteProductoPasilloMasVendido();";
+        break;
+        case 4: cout<<"reporteMarcasMasVendidas();";
+        break;
+        case 5: cout<<"reporteClienteQueMasCompro();";
+        break;
+        case 6: cout<<"reporteClienteQueMenosCompro();";
+        break;
+        case 7: cout<<"reporteProductoGondola();";
+        break;
+        case 8: cout<<"reporteClienteMasFacturas();";
+        break;
+        case 9: cout<<"reporteMarcasProducto();";
+        break;
+        case 10: cout<<"reporteFacturaMayor();";
+        break;
+        case 11: cout<<"reporteProductoPasillo();";
+        break;
+        case 12: reporteClientes();
+        break;
+        case 13: reportePasillos();
+        break;
+        case 14: cout<<"reporteInventario();";
+        break;
+        case 0: return 1;
+        default:
+            cout<<"La opcion escogida es invalida"<<endl;
+        break;
+    }
+    return 0;
 }
 
 

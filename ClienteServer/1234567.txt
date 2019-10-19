@@ -1,0 +1,13 @@
+Cedula: 1234567-0
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: 11
+ 
+
+Cantidad: 1 Codigo: 38 Nombre: CintaAzul Precio: 1850 Impuesto:240.5 Total: 2090.5
+                      Total a pagar: 1.48809e+029
+ 
+ 
+ 
+

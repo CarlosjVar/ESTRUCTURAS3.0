@@ -1,0 +1,6 @@
+Pasillo(s) del supermercado: 
+-Codigo: 4, Nombre de pasillo: Carnes
+-Codigo: 15, Nombre de pasillo: Bebidas
+-Codigo: 20, Nombre de pasillo: Limpieza
+-Codigo: 1, Nombre de pasillo: Abarrotes
+

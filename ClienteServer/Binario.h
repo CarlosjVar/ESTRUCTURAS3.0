@@ -25,6 +25,8 @@ public:
     void cargarMarcas (string pNombreArchivo);
     void rellenarGondolaBinario (AA inventario);
     void rellenarGondolaBinario (pNodoBinario raiz, AA inventario);
+    void reportePasillos (string &texto);
+    void reportePasillos (string &texto, pNodoBinario raiz);
     bool Hh = false;
 };
 

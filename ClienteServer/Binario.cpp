@@ -18,6 +18,27 @@ pNodoBinarioAVL buscarNodoAVL(pNodoBinarioAVL pRaiz, int valor)
     return buscarNodoAVL(pRaiz->Hizq, valor);
 }
 
+void Binario::reportePasillos (string &texto){
+    reportePasillos(texto,this->raiz);
+}
+
+void Binario::reportePasillos(string &texto,pNodoBinario raiz){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        reportePasillos(texto,raiz->Hder);
+        reportePasillos(texto,raiz->Hizq);
+        texto.append("-Codigo: ");
+        texto.append(to_string(raiz->valor));
+        texto.append(", Nombre de pasillo: ");
+        texto.append(raiz->nombre);
+        texto.append("\n");
+        return;
+    }
+}
+
 void Binario::cargarPasillos(string pNombreArchivo){
     string linea;
     string codigoS;

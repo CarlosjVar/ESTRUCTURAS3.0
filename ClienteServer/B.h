@@ -100,5 +100,7 @@ public:
     void cargarAdmins(string pnombreARCHIVO);
 
     void insertar(tipoClave cl, string nombre, string telefono, string codigoCiudad, string correo);
+    void reporteClientes (string &texto);
+    void reporteClientes (string &texto, Pagina *r);
 };
 #endif

@@ -221,6 +221,34 @@ void ArbolB::escribir(Pagina *r, int h)
     }
 }
 
+void ArbolB::reporteClientes(string &texto)
+{
+    reporteClientes(texto,this->raiz);
+}
+
+void ArbolB::reporteClientes(string &texto, Pagina *r)
+{
+    if(r)
+    {
+        reporteClientes(texto,r->obtenerRama(0));
+        for (int k = 1; k <= r->obtenerCuenta(); k++)
+        {
+            texto.append("-Cedula: ");
+            texto.append(to_string(r->obtenerClave(k)));
+            texto.append(", Nombre del cliente: ");
+            texto.append(r->obtenerDato(k,0));
+            texto.append (", Telefono: ");
+            texto.append(r->obtenerDato(k,1));
+            texto.append (", Correo: ");
+            texto.append(r->obtenerDato(k,3));
+            texto.append (", Cod. de ciudad: ");
+            texto.append(r->obtenerDato(k,2));
+            texto.append("\n");
+            reporteClientes(texto,r->obtenerRama(k));
+        }
+    }
+}
+
 void ArbolB::listaCreciente()
 {
     inOrden(raiz);
