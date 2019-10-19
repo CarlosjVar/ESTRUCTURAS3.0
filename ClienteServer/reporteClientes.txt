@@ -1,0 +1,7 @@
+Cliente(s) del supermercado: 
+-Cedula: 1234567, Nombre del cliente: Juan Perez, Telefono: 23658974, Correo: juanpq@gmail.com, Cod. de ciudad: 11
+-Cedula: 1290738, Nombre del cliente: Jose Ramirez, Telefono: 23658911, Correo: jram45@gmail.com, Cod. de ciudad: 20
+-Cedula: 1381254, Nombre del cliente: Maria Eugenia, Telefono: 1134667, Correo: ancamp5@gmail.com, Cod. de ciudad: 45
+-Cedula: 2345678, Nombre del cliente: Ana Campos, Telefono: 1134667, Correo: ancamp5@gmail.com, Cod. de ciudad: 45
+-Cedula: 5894132, Nombre del cliente: Joseph Tenorio, Telefono: 1134667, Correo: ancamp5@gmail.com, Cod. de ciudad: 45
+
