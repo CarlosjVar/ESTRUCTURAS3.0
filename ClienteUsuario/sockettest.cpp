@@ -16,7 +16,7 @@ void SocketTest::Connect()
 
         if(socket->waitForConnected(3000))
         {
-            qDebug() << "Connected!";
+
         }
         else
         {
@@ -26,7 +26,7 @@ void SocketTest::Connect()
 }
 void SocketTest::connected()
 {
-    qDebug()<<"Conectado";
+
 }
 void SocketTest::disconnected()
 {

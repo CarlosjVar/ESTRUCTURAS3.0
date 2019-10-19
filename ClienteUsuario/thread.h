@@ -21,6 +21,7 @@ public:
     void consultacanasta();
     void consultaImp();
     void menuN();
+    void menuR();
 signals:
     void WriteByte(QByteArray data);
     void waitResponse(int q);

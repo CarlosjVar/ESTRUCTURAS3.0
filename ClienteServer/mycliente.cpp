@@ -49,7 +49,6 @@ void Mycliente::readyRead()
             if(aux->cedula==ced)
             {
                 colaclientes.insertarFinal(aux->cedula,aux->nombre,aux->telefono,aux->correo,aux->carrito,aux->facturas,aux->socket);
-                cout<<"agregado"<<endl;
 
             }
                 aux=aux->siguiente;
@@ -337,7 +336,8 @@ if (cliente!=nullptr)
 {
     socket->write("LOS");
     PilaC*carrito=new PilaC;
-    clienteslog.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),carrito,0,this->socket->socketDescriptor());
+    clienteslog.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,3),carrito,cliente->obtenerEstadistica(k,0),this->socket->socketDescriptor());
+    cliente->cambiarEstadistica(k,0,cliente->obtenerEstadistica(k,0)+1);
 }
 else
 {
