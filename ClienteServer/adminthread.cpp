@@ -6,6 +6,7 @@ adminThread::adminThread(QObject*parent)
 
 }
 void adminThread::run()
+//Acciones normales de un thread de administrador
 {
     cout<<"Bienvenido a la interfaz del administrador"<<endl;
     cout<<"Por favor ingrese sus credenciales de administrador: "<<endl;

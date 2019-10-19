@@ -933,7 +933,7 @@ void Menu::consultaPertenencia(){
     }
 }
 void Menu::FacturarCliente()
-///In:listaDCPas super,inventario inventariop
+///In:
 ///Out:None
 ///Funci�n: Se encarga de realizar facturas en funci�n de la pila de productos del cliente, esta pila pasa a una lista, la cual se ordena con quicksort para luego ser recorrida con el fin de poner cada producto en la factura
 {
@@ -995,6 +995,7 @@ void Menu::FacturarCliente()
     return;
 }
 int Menu::precio(conodo compremix)
+// In: nodoCompra* Out:int Fun: Devuelve el precio de un producto
 {
     pNodoBinario pas=buscarNodo(supermercado.raiz,stoi(compremix->pasillo));
     pNodoBinarioAVL pro=buscarNodoAVL(pas->productos,stoi(compremix->producto));

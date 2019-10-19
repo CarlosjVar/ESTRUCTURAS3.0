@@ -6,6 +6,7 @@ Thread::Thread(QObject*parent)
     connect(this,SIGNAL(waitResponse(int)),&socket,SLOT(waitResponse(int)));
 }
 void Thread::run()
+//Funcionamiento del thread del cliente
 {
     cout<<"Bienvenido"<<endl;
     while(true)
@@ -58,12 +59,14 @@ void Thread::run()
     }
 }
 bool is_email_valid(string& email)
+//Valida email valido
 {
    const regex pattern
       ("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
    return regex_match(email, pattern);
 }
 string Thread::pedirDato()
+//Pide los datos a registrar
 {
     string todo;
     string cedula;
@@ -112,6 +115,7 @@ string Thread::pedirDato()
 
 }
 void Thread::menuN()
+//Menú de cliente no registrado
 {
     while(true)
     {
@@ -170,6 +174,7 @@ void Thread::menuN()
 }
 
 void Thread::menu()
+//Menu de cliente registrado
 {
     while(true)
     {
@@ -235,6 +240,7 @@ void Thread::menu()
     }
 }
 void Thread::consultaImp()
+//Consulta de impuesto
 {
     string consulta="CO";
     consulta.append("PA");
@@ -338,6 +344,7 @@ void Thread::consultaImp()
     sleep(1);
 }
 void Thread::consultacanasta()
+//Consuta de canasta básica
 {
     string consulta="CO";
     consulta.append("PA");
@@ -443,6 +450,7 @@ void Thread::consultacanasta()
     sleep(1);
 }
 void Thread::consultapre()
+//Consulta de precio
 
     {
         string consulta="CO";
@@ -550,6 +558,7 @@ void Thread::consultapre()
 }
 
 void Thread::compra1()
+//Validación para cola y si desea
 {
     string anadir="AD";
 
@@ -578,6 +587,7 @@ void Thread::compra1()
     }
 }
 void Thread::comprar()
+//Pide todos los datos necesarios para realizar una compra
 {
     string consulta="CO";
     consulta.append("PA");

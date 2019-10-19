@@ -5,6 +5,7 @@ Mycliente::Mycliente(QObject*parent):QObject(parent)
     QThreadPool::globalInstance()->setMaxThreadCount(15);
 }
 void Mycliente::SetSocket(qintptr Desc)
+// Configura el socket y conecta señales
 {
     socket=new QTcpSocket(this);
     connect(socket,SIGNAL(connected()),this,SLOT(connected()));
@@ -13,28 +14,33 @@ void Mycliente::SetSocket(qintptr Desc)
 
 
     socket->setSocketDescriptor(Desc);
-    qDebug()<<"Cliente conectado";
 }
 void Mycliente::connected()
+//Accion a realizar con cliente conectado
 {
     qDebug()<<"Cliente conectado ev";
 }
 void Mycliente::disconnected()
+//Accion a realizar con cliente desconectado
 {
     qDebug()<<"Cliente no conectado";
 }
 void Mycliente::readyRead()
+//Se llevan a cabo las peticiones de los clientes
 {
     QByteArray data=socket->readAll();
     if(data.toStdString().substr(0,2)=="LO")
+        //Loggea un cliente
     {
         conectadoE(data);
     }
     else if(data.toStdString().substr(0,2)=="RE")
+        //Registra un cliente
     {
         registrarCliente(data);
     }
     else if(data.toStdString().substr(0,2)=="AD")
+        //Agrega un cliente a la cola de clientes
     {
         string ced=data.toStdString().substr(2,data.toStdString().length()-2);
         clienodo aux=clienteslog.primero;
@@ -42,7 +48,7 @@ void Mycliente::readyRead()
         {
             if(aux->cedula==ced)
             {
-                colaclientes.insertarFinal(aux->cedula,aux->nombre,aux->telefono,aux->correo,aux->carrito,0,aux->socket);
+                colaclientes.insertarFinal(aux->cedula,aux->nombre,aux->telefono,aux->correo,aux->carrito,aux->facturas,aux->socket);
                 cout<<"agregado"<<endl;
 
             }
@@ -50,8 +56,10 @@ void Mycliente::readyRead()
         }
     }
     else if(data.toStdString().substr(0,2)=="CO")
+        //Comandos de compra
     {
         if(data.toStdString().substr(2,2)=="PA")
+            //Devuelve pasillos
         {
         string send="COPA;";
         string arbol;
@@ -60,6 +68,7 @@ void Mycliente::readyRead()
         this->write(QByteArray::fromStdString(send));
         }
         else if(data.toStdString().substr(2,2)=="PR")
+            //Devuelve productos
         {
             string datos=data.toStdString();
             char separador[]=";";
@@ -87,6 +96,7 @@ void Mycliente::readyRead()
 
         }
         else if(data.toStdString().substr(2,2)=="MA")
+            //Devuelve marcas
         {
             string datos=data.toStdString();
             char separador[]=";";
@@ -115,6 +125,7 @@ void Mycliente::readyRead()
             }
         }
         else if(data.toStdString().substr(2,2)=="CC")
+            //Consulta de canasta
         {
             string datos=data.toStdString();
             char separador[]=";";
@@ -147,6 +158,7 @@ void Mycliente::readyRead()
             }
         }
         else if(data.toStdString().substr(2,2)=="CI")
+            //Consulta de impuesto
         {
             string datos=data.toStdString();
             char separador[]=";";
@@ -188,6 +200,7 @@ void Mycliente::readyRead()
             }
         }
         else if(data.toStdString().substr(2,2)=="CN")
+            //Consulta de precio
         {
             string datos=data.toStdString();
             char separador[]=";";
@@ -218,6 +231,7 @@ void Mycliente::readyRead()
             }
         }
         else if(data.toStdString().substr(2,2)=="CO")
+            //Selección de marca para devolver cantidad
         {
             string datos=data.toStdString();
             char separador[]=";";
@@ -249,6 +263,7 @@ void Mycliente::readyRead()
             }
         }
         else if(data.toStdString().substr(2,2)=="AG")
+            //Agrega la cantidad al carrito
         {
             string datos=data.toStdString();
             char separador[]=";";
@@ -281,7 +296,7 @@ void Mycliente::readyRead()
                 marca->cantidadGondola=marca->cantidadGondola-cantidad;
                 marca->cantidadVentas=marca->cantidadVentas+cantidad;
             }
-            clienodo aux=clienteslog.primero;
+            clienodo aux=colaclientes.primero;
             while(aux!=nullptr)
             {
                 if(aux->cedula==std::to_string(cedula))
@@ -306,11 +321,13 @@ void Mycliente::readyRead()
 }
 
 void Mycliente::write(QByteArray data)
+//Slot para escribir
 {
         // Must always be called on thread 1
         this->socket->write(data);
 }
 void Mycliente::conectadoE(QByteArray data)
+//Crea un nodo de clietne y lo agrega a una lista de loggeados
 {
 std::string cedula=data.toStdString().substr(2,7);
 Pagina*cliente=new Pagina(5);
@@ -318,7 +335,6 @@ int k;
 cliente=clientes.buscar(std::stoi(cedula),k);
 if (cliente!=nullptr)
 {
-    cout<<this->socket->socketDescriptor()<<endl;
     socket->write("LOS");
     PilaC*carrito=new PilaC;
     clienteslog.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,2),carrito,0,this->socket->socketDescriptor());
@@ -329,6 +345,7 @@ else
 }
 }
 void Mycliente::registrarCliente(QByteArray data)
+//Método de registro de clientes desde el cliente
 {
     string datos=data.toStdString();
     char separador[]=";";
@@ -361,10 +378,12 @@ void Mycliente::registrarCliente(QByteArray data)
     }
 }
 void Mycliente::setCedula(int cedula)
+//Set de cédula del socket
 {
     this->cedula=cedula;
 }
 string Mycliente::inordenMandar(pNodoBinario nodo)
+//Devuelve un string con el arbol binario
 {
     if(nodo==NULL){
             return "";
@@ -381,6 +400,7 @@ string Mycliente::inordenMandar(pNodoBinario nodo)
     }
 }
 string Mycliente::inordenMandarP(pNodoBinarioAVL nodo)
+//Devuelve un string con el arbol avl seleccionado
 {
     if(nodo==NULL){
             return "";
@@ -397,6 +417,7 @@ string Mycliente::inordenMandarP(pNodoBinarioAVL nodo)
     }
 }
 string Mycliente::inordenMandarM(NodePtr nodo)
+//Devuelve un string con las marcas del rojinegro requerido
 {
     if(nodo==NULL){
             return "";
