@@ -1046,20 +1046,6 @@ void Menu::reportePasillos (){
     return;
 }
 
-void Menu::reporteInventario() {
-    ofstream archivo ("reporteInventario.txt");
-    string texto;
-    archivo<<"Inventario del supermercado: "<<endl;
-    inventario.reporteInventario(texto);
-    archivo<<texto<<endl;
-    string nombreArchivo ="reporteInventario";
-    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
-    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
-    system(nombreArchivo.c_str());
-    archivo.close();
-    return;
-}
-
 void Menu::reporteClientes() {
     ofstream archivo ("reporteClientes.txt");
     string texto;
@@ -1164,86 +1150,6 @@ void reporteProductoPasilloMasVendido (){
     return;
  }
 
-void Menu::reporteMarcaMasVendida(){
-    ofstream archivo ("MarcaMasVendida.txt");
-    string texto;
-    archivo<<"Marca(s) mas vendidas(s): "<<endl;
-    supermercado.reporteMarcaMasVendidaBinario(texto);
-    archivo<<texto<<endl;
-    string nombreArchivo ="MarcaMasVendida";
-    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
-    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
-    system(nombreArchivo.c_str());
-    archivo.close();
-    return;
-}
-
-void Menu::reporteClienteQueMasCompro(){
-    ofstream archivo ("ClienteQueMasCompro.txt");
-    string texto;
-    archivo<<"Cliente(s) que mas compro(s): "<<endl;
-    clientes.reporteClienteQueMasCompro(texto);
-    archivo<<texto<<endl;
-    string nombreArchivo ="ClienteQueMasCompro";
-    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
-    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
-    system(nombreArchivo.c_str());
-    archivo.close();
-    return;
-}
-
-void Menu::reporteClienteQueMenosCompro(){
-    ofstream archivo ("ClienteQueMenosCompro.txt");
-    string texto;
-    archivo<<"Cliente(s) que menos compro(s): "<<endl;
-    clientes.reporteClienteQueMenosCompro(texto);
-    archivo<<texto<<endl;
-    string nombreArchivo ="ClienteQueMenosCompro";
-    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
-    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
-    system(nombreArchivo.c_str());
-    archivo.close();
-    return;
-}
-
-
-void Menu::reporteProductoPasillo(){
-    int codigoPasillo;
-    string codigoPasilloS;
-    cout<<inordenMandar(supermercado.raiz)<<endl;
-    bool x = true;
-    while (x){
-        cout<<"Por favor digite el codigo del pasillo cuyos productos desea conocer: ";
-        cin>>codigoPasilloS;
-        if(!esNumerico(codigoPasilloS)){
-            cout<<"Debe digitar un codigo de pasillo valido"<<endl;
-            continue;
-        }
-        codigoPasillo = stoi(codigoPasilloS);
-        pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
-        if (aux!=NULL){
-            break;
-        }else{
-            cout<<"Debe digitar un codigo de pasillo valido"<<endl;
-        }
-    }
-    pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
-    ofstream archivo ("ProductosDeUnPasillo.txt");
-    string texto;
-    archivo<<"Producto(s) del pasillo: "<<endl;
-    BinarioAVL temp = BinarioAVL();
-    temp.raiz = aux->productos;
-    temp.reporteProductos(texto,aux->productos);
-    archivo<<texto<<endl;
-    string nombreArchivo ="ProductosDeUnPasillo";
-    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
-    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
-    system(nombreArchivo.c_str());
-    archivo.close();
-    return;
-
-
-}
 
 
 //A continuacion se definen las funciones de los menus, ambas llaman a las demas funciones descritas y mantienen el ciclo de entradas
@@ -1281,7 +1187,7 @@ int Menu::menuReportes (){
         break;
         case 3: reporteProductoPasilloMasVendido();
         break;
-        case 4: reporteMarcaMasVendida();
+        case 4: cout<<"reporteMarcasMasVendidas();";
         break;
         case 5: reporteClienteQueMasCompro();
         break;
@@ -1295,13 +1201,13 @@ int Menu::menuReportes (){
         break;
         case 10: cout<<"reporteFacturaMayor();";
         break;
-        case 11: reporteProductoPasillo();
+        case 11: cout<<"reporteProductoPasillo();";
         break;
         case 12: reporteClientes();
         break;
         case 13: reportePasillos();
         break;
-        case 14: reporteInventario();
+        case 14: cout<<"reporteInventario();";
         break;
         case 0: return 1;
         default:
