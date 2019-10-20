@@ -15,6 +15,7 @@ class NodoBinarioAVL {
     string nombre;
     int valor;
     int FB;
+    int cantidadVentas = 0;
     NodoBinarioAVL *Hizq, *Hder, *siguiente, *anterior;
     NodePtr marcas = NULL;
     friend class Pila;
@@ -34,6 +35,7 @@ class NodoBinario {
     int valor;
     pNodoBinarioAVL productos = NULL;
     NodoBinario *Hizq, *Hder, *siguiente, *anterior;
+    int cantidadVisitas = 0;
 
     friend class Pila;
     friend class Binario;

@@ -11,4 +11,5 @@ extern ColaS colaclientes;
 extern ColaS clienteslog;
 extern listasort listaventasG;
 extern listasort listaventasI;
+extern listasort listaventasT;
 #endif // GLOBALES_H

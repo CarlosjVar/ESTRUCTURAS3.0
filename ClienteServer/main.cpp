@@ -13,6 +13,7 @@ ColaS clienteslog;
 Server servidor;
 listasort listaventasG;
 listasort listaventasI;
+listasort listaventasT;
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);

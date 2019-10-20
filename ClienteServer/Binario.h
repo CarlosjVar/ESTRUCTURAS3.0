@@ -27,6 +27,12 @@ public:
     void rellenarGondolaBinario (pNodoBinario raiz, AA inventario);
     void reportePasillos (string &texto);
     void reportePasillos (string &texto, pNodoBinario raiz);
+    void reportePasilloMasVisitado (string &texto);
+    void reportePasilloMasVisitado (string &texto, pNodoBinario raiz, int mayor);
+    void  cantidadMayorDeVisitas (int &mayor, pNodoBinario raiz);
+    void  cantidadMenorDeVisitas (int &menor, pNodoBinario raiz);
+    void reportePasilloMenosVisitado (string &texto);
+    void reportePasilloMenosVisitado (string &texto, pNodoBinario raiz, int menor);
     bool Hh = false;
 };
 
@@ -50,6 +56,9 @@ public:
     void RotacionSimpleIzquierda(NodoBinarioAVL *&n1, NodoBinarioAVL *&n2);
     void RotacionSimpleDerecha(NodoBinarioAVL *&n1, NodoBinarioAVL *&n2);
     void rellenarGondolaAVL (pnodoAVL raiz, int codigoPasillo, AA inventario);
+    void reporteProductoMasVendido (string &texto);
+    void reporteProductoMasVendido (string &texto, pNodoBinarioAVL raiz, int mayor);
+    void  cantidadMayorDeVentas (int &mayor, pNodoBinarioAVL raiz);
 };
 pNodoBinario buscarNodo(pNodoBinario pRaiz, int valor);
 pNodoBinarioAVL buscarNodoAVL(pNodoBinarioAVL pRaiz, int valor);

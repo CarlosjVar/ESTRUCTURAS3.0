@@ -997,8 +997,15 @@ void Menu::FacturarCliente()
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
             totalT=totalT+total+aplic;
         }
+//        pNodoBinario aux = buscarNodo(supermercado.raiz,stoi(item->pasillo));
+//        pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,stoi(item->producto));
+//        RBTree temp = RBTree(aux2->marcas);
+//        NodePtr aux3 = temp.searchTree(stoi(item->marca));
+//        aux3->cantidadVentas = aux3->cantidadVentas + item->cantidad;
+//        aux2->cantidadVentas = aux2->cantidadVentas + item->cantidad;
         listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
-        listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+        listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+//       listaventasT.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
         item=item->siguiente;
     }
 
@@ -1009,6 +1016,7 @@ void Menu::FacturarCliente()
     colaclientes.BorrarInicio();
     return;
 }
+
 int Menu::precio(conodo compremix)
 // In: nodoCompra* Out:int Fun: Devuelve el precio de un producto
 {
@@ -1047,6 +1055,91 @@ void Menu::reporteClientes() {
     return;
 }
 
+void Menu::reportePasilloMasVisitado(){
+    ofstream archivo ("PasilloMasVisitado.txt");
+    string texto;
+    archivo<<"Pasillo(s) más visitado(s): "<<endl;
+    supermercado.reportePasilloMasVisitado(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="PasilloMasVisitado";
+    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
+
+void Menu::reportePasilloMenosVisitado(){
+    ofstream archivo ("PasilloMenosVisitado.txt");
+    string texto;
+    archivo<<"Pasillo(s) menos visitado(s): "<<endl;
+    supermercado.reportePasilloMenosVisitado(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="PasilloMenosVisitado";
+    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
+
+string inordenMandar(pNodoBinario nodo)
+//Devuelve un string con el arbol binario
+{
+    if(nodo==NULL){
+            return "";
+    }else
+    {   string aux;
+        aux.append("Nombre: ");
+        aux.append(nodo->nombre);
+        aux.append(" Codigo: ");
+        aux.append(std::to_string(nodo->valor));
+        aux.append("\n");
+        aux+=inordenMandar(nodo->Hizq);
+        aux+=inordenMandar(nodo->Hder);
+        return aux;
+    }
+}
+
+void reporteProductoPasilloMasVendido (){
+    if (supermercado.raiz == NULL){
+        cout<<"No hay pasillos registrados aun"<<endl;
+        return;
+    }
+    int codigoPasillo;
+    string codigoPasilloS;
+    cout<<inordenMandar(supermercado.raiz)<<endl;
+    bool x = true;
+    while (x){
+        cout<<"Por favor digite el codigo del pasillo cuyo producto mas vendido desea conocer: ";
+        cin>>codigoPasilloS;
+        if(!esNumerico(codigoPasilloS)){
+            cout<<"Debe digitar un codigo de pasillo valido"<<endl;
+            continue;
+        }
+        codigoPasillo = stoi(codigoPasilloS);
+        pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
+        if (aux!=NULL){
+            break;
+        }else{
+            cout<<"Debe digitar un codigo de pasillo valido"<<endl;
+        }
+    }
+    pNodoBinario aux = buscarNodo(supermercado.raiz,codigoPasillo);
+    ofstream archivo ("ProductoPasilloMasVendido.txt");
+    string texto;
+    archivo<<"Producto(s) mas vendido(s): "<<endl;
+    BinarioAVL temp = BinarioAVL();
+    temp.raiz = aux->productos;
+    temp.reporteProductoMasVendido(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="ProductoPasilloMasVendido";
+    nombreArchivo = "notepad \"" + nombreArchivo + "\"";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+ }
 
 
 
@@ -1079,11 +1172,11 @@ int Menu::menuReportes (){
     }
     opcion = stoi (opcionS);
     switch (opcion){
-        case 1: cout<<"reportePasilloMasVisitado();";
+        case 1: reportePasilloMasVisitado();
         break;
-        case 2: cout<<"reportePasilloMenosVisitado();";
+        case 2: reportePasilloMenosVisitado();
         break;
-        case 3: cout<<"reporteProductoPasilloMasVendido();";
+        case 3: reporteProductoPasilloMasVendido();
         break;
         case 4: cout<<"reporteMarcasMasVendidas();";
         break;

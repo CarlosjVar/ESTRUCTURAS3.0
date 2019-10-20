@@ -121,13 +121,13 @@ void Thread::menuN()
 {
     while(true)
     {
-        cout<<"Bienvenido , seleccione una opción: "<<endl;
+        cout<<"Bienvenido , seleccione una opcion: "<<endl;
         cout<<"1 Consultar un precio "<<endl;
         cout<<"2 Consultar si un producto es de la canasta "<<endl;
         cout<<"3 Consultar el % impuesto de un producto "<<endl;
         cout<<"4 Salir"<<endl;
         string opc;
-        cout<<"Opción: ";
+        cout<<"Opcion: ";
         cin>>opc;
         if(opc=="1")
         {

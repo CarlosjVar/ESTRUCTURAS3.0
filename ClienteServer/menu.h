@@ -45,6 +45,9 @@ int precio(conodo compremix);
 int menuReportes ();
 void reportePasillos();
 void reporteClientes();
+void reportePasilloMasVisitado ();
+void reportePasilloMenosVisitado ();
+void reporteProductosPasilloMasVendido ();
 signals:
     void enviart(qintptr*s,QByteArray data);
     void blockAll();

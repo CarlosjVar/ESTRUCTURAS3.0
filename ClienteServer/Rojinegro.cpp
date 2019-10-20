@@ -442,6 +442,7 @@ void  RBTree::insert(int key,string nombre, int precio, int cantidadGondola) {
     node->nombre = nombre;
     node->precio = precio;
     node->cantidadGondola = cantidadGondola;
+    node->cantidadVentas = 0;
     node->parent = nullptr;
     node->data = key;
     node->left = NULL;

@@ -18,6 +18,98 @@ pNodoBinarioAVL buscarNodoAVL(pNodoBinarioAVL pRaiz, int valor)
     return buscarNodoAVL(pRaiz->Hizq, valor);
 }
 
+
+
+void Binario::reportePasilloMasVisitado(string &texto){
+    int mayor;
+    cantidadMayorDeVisitas(mayor, this->raiz);
+    if (mayor==0){
+        texto.append("No se ha visitado ningún pasillo aún");
+        return;
+    }
+    reportePasilloMasVisitado(texto, this->raiz,mayor);
+    return;
+}
+
+void Binario::cantidadMayorDeVisitas(int &mayor, pNodoBinario raiz){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        cantidadMayorDeVisitas(mayor,raiz->Hder);
+        cantidadMayorDeVisitas(mayor,raiz->Hizq);
+        if (raiz->cantidadVisitas>mayor){
+            mayor=raiz->cantidadVisitas;
+            return;
+        }
+    }
+    return;
+}
+
+void Binario::cantidadMenorDeVisitas(int &mayor, pNodoBinario raiz){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        cantidadMenorDeVisitas(mayor,raiz->Hder);
+        cantidadMenorDeVisitas(mayor,raiz->Hizq);
+        if (raiz->cantidadVisitas<mayor){
+            mayor=raiz->cantidadVisitas;
+            return;
+        }
+    }
+    return;
+}
+
+void Binario::reportePasilloMasVisitado(string &texto, pNodoBinario raiz, int mayor){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        reportePasilloMasVisitado(texto,raiz->Hder,mayor);
+        reportePasilloMasVisitado(texto,raiz->Hizq,mayor);
+        if (raiz->cantidadVisitas==mayor){
+            texto.append("-Codigo: ");
+            texto.append(to_string(raiz->valor));
+            texto.append(", Nombre de pasillo: ");
+            texto.append(raiz->nombre);
+            texto.append("\n");
+        }
+    }
+    return;
+}
+
+void Binario::reportePasilloMenosVisitado(string &texto, pNodoBinario raiz, int menor){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        reportePasilloMenosVisitado(texto,raiz->Hder,menor);
+        reportePasilloMenosVisitado(texto,raiz->Hizq,menor);
+        if (raiz->cantidadVisitas==menor){
+            texto.append("-Codigo: ");
+            texto.append(to_string(raiz->valor));
+            texto.append(", Nombre de pasillo: ");
+            texto.append(raiz->nombre);
+            texto.append("\n");
+        }
+    }
+    return;
+}
+
+
+void Binario::reportePasilloMenosVisitado(string &texto){
+    int menor = this->raiz->cantidadVisitas;
+    cantidadMenorDeVisitas(menor, this->raiz);
+    reportePasilloMenosVisitado(texto, this->raiz,menor);
+    return;
+}
+
+
 void Binario::reportePasillos (string &texto){
     reportePasillos(texto,this->raiz);
 }
@@ -227,6 +319,52 @@ void Binario::cargarMarcas (string pNombreArchivo){
         }
     }
     archivo.close();
+    return;
+}
+
+void BinarioAVL::reporteProductoMasVendido(string &texto){
+    int mayor;
+    cantidadMayorDeVentas(mayor, this->raiz);
+    if (mayor==0){
+        texto.append("No se han vendido productos aún");
+        return;
+    }
+    reporteProductoMasVendido(texto, this->raiz,mayor);
+    return;
+}
+
+void BinarioAVL::cantidadMayorDeVentas(int &mayor, pNodoBinarioAVL raiz){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        cantidadMayorDeVentas(mayor,raiz->Hder);
+        cantidadMayorDeVentas(mayor,raiz->Hizq);
+        if (raiz->cantidadVentas>mayor){
+            mayor=raiz->cantidadVentas;
+            return;
+        }
+    }
+    return;
+}
+
+void BinarioAVL::reporteProductoMasVendido(string &texto, pNodoBinarioAVL raiz, int mayor){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        reporteProductoMasVendido(texto,raiz->Hder,mayor);
+        reporteProductoMasVendido(texto,raiz->Hizq,mayor);
+        if (raiz->cantidadVentas==mayor){
+            texto.append("-Codigo: ");
+            texto.append(to_string(raiz->valor));
+            texto.append(", Nombre de producto: ");
+            texto.append(raiz->nombre);
+            texto.append("\n");
+        }
+    }
     return;
 }
 

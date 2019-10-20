@@ -11,3 +11,39 @@ Cantidad: 1 Codigo: 38 Nombre: CintaAzul Precio: 1850 Impuesto:240.5 Total: 2090
  
  
 
+Cedula: 1234567-16
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+                      Total a pagar: 1.4013e-045
+ 
+ 
+ 
+
+Cedula: 1234567-16
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+                      Total a pagar: 1.4013e-045
+ 
+ 
+ 
+
+Cedula: 1234567-16
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+                      Total a pagar: 1.4013e-045
+ 
+ 
+ 
+

@@ -81,6 +81,7 @@ void Mycliente::readyRead()
             pNodoBinario pasillop=buscarNodo(raiz,pasilloi);
             if(pasillop!=nullptr)
             {
+                pasillop->cantidadVisitas+=1;
                 string send="COPR;";
                 string arbol;
                 arbol=inordenMandarP(pasillop->productos);
@@ -427,7 +428,7 @@ string Mycliente::inordenMandarM(NodePtr nodo)
         aux.append(nodo->nombre);
         aux.append(" Codigo: ");
         aux.append(std::to_string(nodo->data));
-        aux.append("Precio: ");
+        aux.append(" Precio: ");
         aux.append(std::to_string(nodo->precio));
         aux.append("\n");
         aux+=inordenMandarM(nodo->left);
