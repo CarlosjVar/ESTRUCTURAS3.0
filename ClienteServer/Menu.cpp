@@ -984,16 +984,13 @@ void Menu::FacturarCliente()
 
         if(impuesto->canastaB==1)
         {
-            cout<<"Canasta"<<endl;
             float aplic=total*(impuesto->impuesto/100);
             outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
             totalT=totalT+total+aplic;
-            cout<<enviar<<endl;
         }
         else
         {
-            cout<<"No canasta"<<endl;
             float aplic=total*0.1f;
             outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
@@ -1006,7 +1003,6 @@ void Menu::FacturarCliente()
 
     outfile<<"                      Total a pagar: "<<totalT<<"\n \n \n \n"<<endl;
     outfile.close();
-    cout<<atendido->socket<<endl;
     emit enviart(&atendido->socket,QByteArray::fromStdString(enviar));
     colaclientes.BorrarInicio();
     return;
