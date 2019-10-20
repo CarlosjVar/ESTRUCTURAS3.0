@@ -1,0 +1,7 @@
+clientes(s) que menos compro(aron): 
+-Cedula: 1179104, Nombre del cliente: Joseph Tenorio
+-Cedula: 1281354, Nombre del cliente: Ivannia Cerdas
+-Cedula: 1290738, Nombre del cliente: Jose Ramirez
+-Cedula: 2345678, Nombre del cliente: Ana Campos
+-Cedula: 8913450, Nombre del cliente: Carlos Varela
+

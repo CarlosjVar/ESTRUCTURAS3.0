@@ -554,7 +554,7 @@ void Thread::consultacanasta()
         cin.ignore();
         cout<<"Por favor digite un numero"<<endl;
     }
-    std::cout<<socket.getpro()<<endl;
+
     consulta="CO";
     consulta.append("MA;");
     consulta.append(std::to_string(pasi));
@@ -572,7 +572,7 @@ void Thread::consultacanasta()
     {
         cout<<"Eliga una marca: ";
         cin>>marca;
-        cout<<socket.concalma<<endl;
+
         if(socket.concalma)
         {
             cout<<"Servidor en mantenimiento"<<endl;
@@ -661,7 +661,6 @@ void Thread::consultapre()
             cin.ignore();
             cout<<"Por favor digite un numero"<<endl;
         }
-        std::cout<<socket.getpro()<<endl;
         consulta="CO";
         consulta.append("MA;");
         consulta.append(std::to_string(pasi));
@@ -679,7 +678,6 @@ void Thread::consultapre()
         {
             cout<<"Eliga una marca: ";
             cin>>marca;
-            cout<<socket.concalma<<endl;
             if(socket.concalma)
             {
                 cout<<"Servidor en mantenimiento"<<endl;
@@ -797,7 +795,7 @@ void Thread::comprar()
         cin.ignore();
         cout<<"Por favor digite un numero"<<endl;
     }
-    std::cout<<socket.getpro()<<endl;
+
     consulta="CO";
     consulta.append("MA;");
     consulta.append(std::to_string(pasi));

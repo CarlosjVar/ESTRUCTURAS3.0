@@ -19,7 +19,6 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     servidor.StartServer();
     supermercado.cargarPasillos("Pasillos.txt");
-    supermercado.PreordenI();
     supermercado.cargarProductos("ProductosPasillos.txt");
     supermercado.cargarMarcas("MarcasProductos.txt");
     clientes.cargarClientes("Clientes.txt");

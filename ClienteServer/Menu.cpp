@@ -1187,7 +1187,7 @@ int Menu::menuReportes (){
         break;
         case 3: reporteProductoPasilloMasVendido();
         break;
-        case 4: cout<<"reporteMarcasMasVendidas();";
+        case 4: reporteMarcaMasVendida();
         break;
         case 5: reporteClienteQueMasCompro();
         break;
@@ -1207,7 +1207,7 @@ int Menu::menuReportes (){
         break;
         case 13: reportePasillos();
         break;
-        case 14: cout<<"reporteInventario();";
+        case 14: reporteInventario();
         break;
         case 0: return 1;
         default:
@@ -1216,6 +1216,56 @@ int Menu::menuReportes (){
     }
     return 0;
 }
-
-
+void Menu::reporteClienteQueMasCompro(){
+    ofstream archivo ("ClientesQueMasCompro.txt");
+    string texto;
+    archivo<<"Clientes(s) que mas compro(aron): "<<endl;
+    clientes.reporteClienteQueMasCompro(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="ClientesQueMasCompro";
+    nombreArchivo = "notepad " +nombreArchivo + "";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
+void Menu::reporteMarcaMasVendida(){
+    ofstream archivo ("MarcaMasVendida.txt");
+    string texto;
+    archivo<<"Marca(s) mas vendida(s): "<<endl;
+    supermercado.reporteMarcaMasVendidaBinario(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="MarcaMasVendida";
+    nombreArchivo = "notepad " + nombreArchivo + "";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
+void Menu::reporteClienteQueMenosCompro(){
+    ofstream archivo ("ClientesQueMenosCompro.txt");
+    string texto;
+    archivo<<"clientes(s) que menos compro(aron): "<<endl;
+    clientes.reporteClienteQueMenosCompro(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="ClientesQueMenosCompro";
+    nombreArchivo = "notepad " + nombreArchivo + "";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
+void Menu::reporteInventario(){
+    ofstream archivo ("reporteInventario.txt");
+    string texto;
+    archivo<<"Inventario del supermercado: "<<endl;
+    inventario.reporteInventario(texto);
+    archivo<<texto<<endl;
+    string nombreArchivo ="reporteInventario";
+    nombreArchivo = "notepad " + nombreArchivo + "";
+    cout<<"Debe cerrar el archivo para volver al menu de reportes"<<endl;
+    system(nombreArchivo.c_str());
+    archivo.close();
+    return;
+}
 

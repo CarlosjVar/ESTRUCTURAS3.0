@@ -134,3 +134,55 @@ Cantidad: 4 Codigo: 36 Nombre: Rojitos Precio: 1500 Impuesto:600 Total: 6600
  
  
 
+Cedula: 1234567-0
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+Cantidad: 1 Codigo: 51 Nombre: Luisiana Precio: 1000 Impuesto:130 Total: 1130
+                      Total a pagar: 1130
+ 
+ 
+ 
+
+Cedula: 1234567-0
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+Cantidad: 12 Codigo: 51 Nombre: Luisiana Precio: 1000 Impuesto:1560 Total: 13560
+                      Total a pagar: 13560
+ 
+ 
+ 
+
+Cedula: 1234567-0
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+Cantidad: 12 Codigo: 51 Nombre: Luisiana Precio: 1000 Impuesto:1560 Total: 13560
+                      Total a pagar: 13560
+ 
+ 
+ 
+
+Cedula: 1234567-0
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+Cantidad: 12 Codigo: 51 Nombre: Luisiana Precio: 1000 Impuesto:1560 Total: 13560
+                      Total a pagar: 13560
+ 
+ 
+ 
+

@@ -1,4 +1,3 @@
 Producto(s) mas vendido(s): 
--Codigo: 34, Nombre de producto: Frijoles
 -Codigo: 20, Nombre de producto: Arroz
 
