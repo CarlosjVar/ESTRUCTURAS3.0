@@ -47,3 +47,43 @@ Correo: juanpq@gmail.com
  
  
 
+Cedula: 1234567-16
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+Cantidad: 12 Codigo: 51 Nombre: Luisiana Precio: 1000 Impuesto:1560 Total: 13560
+                      Total a pagar: 13560
+ 
+ 
+ 
+
+Cedula: 1234567-16
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+Cantidad: 1 Codigo: 38 Nombre: CintaAzul Precio: 1850 Impuesto:240.5 Total: 2090.5
+                      Total a pagar: 2090.5
+ 
+ 
+ 
+
+Cedula: 1234567-16
+Nombre: Juan Perez
+Número: 23658974
+
+Correo: juanpq@gmail.com
+ 
+
+Cantidad: 2 Codigo: 51 Nombre: Luisiana Precio: 1000 Impuesto:260 Total: 2260
+Cantidad: 2 Codigo: 36 Nombre: Rojitos Precio: 1500 Impuesto:300 Total: 3300
+                      Total a pagar: 5560
+ 
+ 
+ 
+

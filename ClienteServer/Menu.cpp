@@ -999,15 +999,15 @@ void Menu::FacturarCliente()
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
             totalT=totalT+total+aplic;
         }
-//        pNodoBinario aux = buscarNodo(supermercado.raiz,stoi(item->pasillo));
-//        pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,stoi(item->producto));
-//        RBTree temp = RBTree(aux2->marcas);
-//        NodePtr aux3 = temp.searchTree(stoi(item->marca));
-//        aux3->cantidadVentas = aux3->cantidadVentas + item->cantidad;
-//        aux2->cantidadVentas = aux2->cantidadVentas + item->cantidad;
+        pNodoBinario aux = buscarNodo(supermercado.raiz,stoi(item->pasillo));
+        pNodoBinarioAVL aux2 = buscarNodoAVL(aux->productos,stoi(item->producto));
+        RBTree temp = RBTree(aux2->marcas);
+        NodePtr aux3 = temp.searchTree(stoi(item->marca));
+        aux3->cantidadVentas = aux3->cantidadVentas + item->cantidad;
+        aux2->cantidadVentas = aux2->cantidadVentas + item->cantidad;
         listaventasG.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
         listaventasI.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
-//       listaventasT.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
+        listaventasT.insert(item->pasillo,item->producto,item->marca,item->producto,item->cantidad);
         item=item->siguiente;
     }
 
@@ -1106,6 +1106,10 @@ string inordenMandar(pNodoBinario nodo)
 void reporteProductoPasilloMasVendido (){
     if (supermercado.raiz == NULL){
         cout<<"No hay pasillos registrados aun"<<endl;
+        return;
+    }
+    if (listaventasT.empty()){
+        cout<<"No hay ventas registradas aun"<<endl;
         return;
     }
     int codigoPasillo;

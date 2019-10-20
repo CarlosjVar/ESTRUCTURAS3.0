@@ -289,12 +289,10 @@ void Mycliente::readyRead()
             {
                 cantidad=marca->cantidadGondola;
                 marca->cantidadGondola=0;
-                marca->cantidadVentas=marca->cantidadVentas+cantidad;
             }
             else
             {
                 marca->cantidadGondola=marca->cantidadGondola-cantidad;
-                marca->cantidadVentas=marca->cantidadVentas+cantidad;
             }
             clienodo aux=clienteslog.primero;
             while(aux!=nullptr)
