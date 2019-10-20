@@ -975,23 +975,25 @@ void Menu::FacturarCliente()
     outfile<<"Correo: "<<atendido->correo<<"\n \n"<<endl;
     enviar=enviar+"Correo: "+atendido->correo+"\n \n";
     conodo item=ordenada.first;
-
     while(item!=NULL)
     {
         int precios=precio(item);
         string codigo=item->pasillo+item->producto+item->marca;
         nodoAA*impuesto=inventario.buscarNodoAA(inventario.raiz,stoi(codigo));
         int total=precios*item->cantidad;
-        cout<<"total"<<total<<endl;
+
         if(impuesto->canastaB==1)
         {
+            cout<<"Canasta"<<endl;
             float aplic=total*(impuesto->impuesto/100);
             outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
             totalT=totalT+total+aplic;
+            cout<<enviar<<endl;
         }
         else
         {
+            cout<<"No canasta"<<endl;
             float aplic=total*0.1f;
             outfile<<"Cantidad: "<<item->cantidad<<" Codigo: "<<item->marca<<" Nombre: "<<item->nombre<<" Precio: "<<precios<<" Impuesto:"<<aplic<<" Total: "<<total+aplic<<endl;
             enviar=enviar+"Cantidad: "+std::to_string(item->cantidad)+" Codigo: "+item->marca+" Nombre: "+item->nombre+" Precio: "+std::to_string(precios)+" Impuestos: "+std::to_string(aplic)+" Total: "+std::to_string(total+aplic)+"\n";
