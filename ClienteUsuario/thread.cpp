@@ -19,7 +19,6 @@ void Thread::run()
         emit WriteByte(QByteArray::fromStdString(login));
         emit waitResponse(2000);
         this->sleep(1);
-        cout<<"asd"<<endl;
         if(socket.getestado())
         {
             cout<<"Se ha logueado"<<endl;
@@ -189,7 +188,7 @@ void Thread::menu()
         cout<<"5 Reportes"<<endl;
         cout<<"6 Salir"<<endl;
         string opc;
-        cout<<"Opción: ";
+        cout<<"Opcion: ";
         cin>>opc;
         if(opc=="1")
         {
