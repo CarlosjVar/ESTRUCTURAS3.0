@@ -295,7 +295,7 @@ void Mycliente::readyRead()
                 marca->cantidadGondola=marca->cantidadGondola-cantidad;
                 marca->cantidadVentas=marca->cantidadVentas+cantidad;
             }
-            clienodo aux=colaclientes.primero;
+            clienodo aux=clienteslog.primero;
             while(aux!=nullptr)
             {
                 if(aux->cedula==std::to_string(cedula))
