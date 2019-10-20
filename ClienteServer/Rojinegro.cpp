@@ -1,4 +1,41 @@
 #include "Rojinegro.h"
+void RBTree::mayorCantidadDeVentasRN(int &mayor){
+    mayorCantidadDeVentasRN(this->root,mayor);
+}
+
+void RBTree::mayorCantidadDeVentasRN(NodePtr raiz,int &mayor){
+    if (raiz==NULL){
+        return;
+    }
+    mayorCantidadDeVentasRN(raiz->left,mayor);
+    mayorCantidadDeVentasRN(raiz->right,mayor);
+    if (raiz->cantidadVentas>mayor)
+        mayor=raiz->cantidadVentas;
+}
+
+
+void RBTree::reporteMarcaMasVendida(string &texto, int &mayor){
+    reporteMarcaMasVendida(texto,this->root,mayor);
+}
+
+void RBTree::reporteMarcaMasVendida(string &texto, NodePtr raiz, int &mayor){
+    if (raiz==NULL){
+        return;
+    }
+    reporteMarcaMasVendida(texto,raiz->left,mayor);
+    reporteMarcaMasVendida(texto,raiz->right,mayor);
+    if (raiz->cantidadVentas==mayor){
+        texto.append("-Codigo: ");
+        texto.append(to_string(raiz->data));
+        texto.append(", Nombre de marca: ");
+        texto.append(raiz->nombre);
+        texto.append("\n");
+       }
+}
+
+
+
+
 void RBTree::rellenarGondolaRN (NodePtr raiz, int codigoPasillo, int codigoProducto, AA inventario){
     if (raiz==NULL){
         return;

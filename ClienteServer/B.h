@@ -42,6 +42,12 @@ public:
         {
             this->ramas[i] = nullptr;
         }
+        for(int i = 0; i <= orden; i++)
+        {
+            this->eClientes[i][0] = 0;
+            this->eClientes[i][1] = 0;
+            this->eClientes[i][2] = 0;
+        }
     }
     string obtenerDato (int y,int dato) {return this->clientes[y][dato];}
     void cambiarDato (int numCliente, int numDato , string dato) {this->clientes[numCliente][numDato] = dato;}
@@ -102,5 +108,13 @@ public:
     void insertar(tipoClave cl, string nombre, string telefono, string codigoCiudad, string correo);
     void reporteClientes (string &texto);
     void reporteClientes (string &texto, Pagina *r);
+    void sacarMayorCompra (int &mayor);
+    void sacarMayorCompra (int &mayor, Pagina *r);
+    void sacarMenorCompra (int &menor);
+    void sacarMenorCompra (int &manor, Pagina *r);
+    void reporteClienteQueMasCompro (string &texto);
+    void reporteClienteQueMasCompro (string &texto, Pagina *r,int mayor);
+    void reporteClienteQueMenosCompro (string &texto);
+    void reporteClienteQueMenosCompro (string &texto, Pagina *r, int menor);
 };
 #endif

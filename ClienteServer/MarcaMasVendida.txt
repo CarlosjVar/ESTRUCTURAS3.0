@@ -1,0 +1,4 @@
+Marca(s) mas vendidas(s): 
+-Codigo: 37, Nombre de marca: Kerns
+-Codigo: 51, Nombre de marca: Luisiana
+

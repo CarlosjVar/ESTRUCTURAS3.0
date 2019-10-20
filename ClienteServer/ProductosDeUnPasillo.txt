@@ -1,0 +1,3 @@
+Producto(s) del pasillo: 
+-Codigo: 73, Nombre de producto: Jamones
+

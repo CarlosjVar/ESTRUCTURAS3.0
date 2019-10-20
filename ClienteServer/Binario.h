@@ -25,6 +25,9 @@ public:
     void cargarMarcas (string pNombreArchivo);
     void rellenarGondolaBinario (AA inventario);
     void rellenarGondolaBinario (pNodoBinario raiz, AA inventario);
+    void reporteMarcaMasVendidaBinario (string &texto);
+    void reporteMarcaMasVendidaBinario (string &texto, pNodoBinario raiz,int &mayor );
+    void mayorCantidadDeVentas (pNodoBinario raiz, int &mayor);
     void reportePasillos (string &texto);
     void reportePasillos (string &texto, pNodoBinario raiz);
     void reportePasilloMasVisitado (string &texto);
@@ -56,6 +59,9 @@ public:
     void RotacionSimpleIzquierda(NodoBinarioAVL *&n1, NodoBinarioAVL *&n2);
     void RotacionSimpleDerecha(NodoBinarioAVL *&n1, NodoBinarioAVL *&n2);
     void rellenarGondolaAVL (pnodoAVL raiz, int codigoPasillo, AA inventario);
+    void reporteProductos (string &texto,pnodoAVL raiz);
+    void reporteMarcaMasVendidaAVL (string &texto, pnodoAVL raiz, int &mayor);
+    void mayorCantidadDeVentasAVL (pnodoAVL raiz,int &mayor);
     void reporteProductoMasVendido (string &texto);
     void reporteProductoMasVendido (string &texto, pNodoBinarioAVL raiz, int mayor);
     void  cantidadMayorDeVentas (int &mayor, pNodoBinarioAVL raiz);

@@ -1,0 +1,8 @@
+Inventario del supermercado: 
+-Nombre marca: Blanquita, cantidad en Stock: 44
+-Nombre marca: CintaAzul, cantidad en Stock: 27
+-Nombre marca: Kerns, cantidad en Stock: 16
+-Nombre marca: SalSol, cantidad en Stock: 10
+-Nombre marca: Luisiana, cantidad en Stock: 50
+-Nombre marca: Rojitos, cantidad en Stock: 35
+
