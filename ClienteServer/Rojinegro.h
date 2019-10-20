@@ -89,6 +89,10 @@ public:
 	// and fix the tree
     void insert(int key,string nombre, int precio, int cantidadGondola);
     void rellenarGondolaRN (NodePtr raiz, int codigoPasillo, int codigoProducto, AA inventario);
+    void mayorCantidadDeVentasRN (NodePtr raiz, int &mayor);
+    void mayorCantidadDeVentasRN ( int &mayor);
+    void reporteMarcaMasVendida (string &texto, NodePtr raiz, int &mayor);
+    void reporteMarcaMasVendida (string &texto, int &mayor);
 
     NodePtr getRoot();
     void prettyPrint();

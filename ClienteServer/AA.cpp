@@ -1,4 +1,25 @@
 #include "AA.h"
+
+void AA::reporteInventario(string &texto){
+    reporteInventario(texto,this->raiz);
+}
+
+void AA::reporteInventario(string &texto, pnodoAA raiz){
+    if (raiz==NULL){
+        return;
+    }
+    reporteInventario(texto,raiz->hDer);
+    reporteInventario(texto,raiz->hIzq);
+    texto.append("-Nombre marca: ");
+    texto.append(raiz->nombre);
+    texto.append(", cantidad en Stock: ");
+    texto.append(to_string(raiz->cantidadStock));
+    texto.append("\n");
+}
+
+
+
+
 pnodoAA AA::buscarNodoAA(int valor){
     return buscarNodoAA(this->raiz, valor);
 }

@@ -249,6 +249,98 @@ void ArbolB::reporteClientes(string &texto, Pagina *r)
     }
 }
 
+void ArbolB::sacarMayorCompra(int &mayor, Pagina *r)
+{
+    if(r)
+    {
+        sacarMayorCompra(mayor,r->obtenerRama(0));
+        for (int k = 1; k <= r->obtenerCuenta(); k++)
+        {
+            if (mayor<r->obtenerEstadistica(k,0)){
+                mayor=r->obtenerEstadistica(k,0);
+            }
+            sacarMayorCompra(mayor,r->obtenerRama(k));
+        }
+    }
+}
+
+void ArbolB::sacarMayorCompra(int &mayor){
+    sacarMayorCompra(mayor,this->raiz);
+}
+
+void ArbolB::sacarMenorCompra(int &menor, Pagina *r)
+{
+    if(r)
+    {
+        sacarMenorCompra(menor,r->obtenerRama(0));
+        for (int k = 1; k <= r->obtenerCuenta(); k++)
+        {
+            if (menor>r->obtenerEstadistica(k,0)){
+                menor=r->obtenerEstadistica(k,0);
+            }
+            sacarMenorCompra(menor,r->obtenerRama(k));
+        }
+    }
+}
+
+void ArbolB::sacarMenorCompra(int &menor){
+    sacarMenorCompra(menor,this->raiz);
+}
+
+void ArbolB::reporteClienteQueMasCompro(string &texto){
+    int mayor;
+    sacarMayorCompra(mayor);
+    if (mayor==0){
+        texto.append("Ningún cliente ha facturado aún");
+    }
+    reporteClienteQueMasCompro(texto,this->raiz,mayor);
+
+}
+
+void ArbolB::reporteClienteQueMenosCompro(string &texto){
+    int menor = raiz->obtenerEstadistica(0,0);
+    sacarMenorCompra(menor);
+    reporteClienteQueMenosCompro(texto,this->raiz,menor);
+
+}
+
+void ArbolB::reporteClienteQueMasCompro(string &texto, Pagina *r, int mayor){
+    if(r)
+    {
+        reporteClienteQueMasCompro(texto,r->obtenerRama(0),mayor);
+        for (int k = 1; k <= r->obtenerCuenta(); k++)
+        {
+            if (r->obtenerEstadistica(k,0)==mayor){
+                texto.append("-Cedula: ");
+                texto.append(to_string(r->obtenerClave(k)));
+                texto.append(", Nombre del cliente: ");
+                texto.append(r->obtenerDato(k,0));
+                texto.append("\n");
+            }
+            reporteClienteQueMasCompro(texto,r->obtenerRama(k),mayor);
+        }
+    }
+}
+
+void ArbolB::reporteClienteQueMenosCompro(string &texto, Pagina *r, int menor){
+    if(r)
+    {
+        reporteClienteQueMenosCompro(texto,r->obtenerRama(0),menor);
+        for (int k = 1; k <= r->obtenerCuenta(); k++)
+        {
+            if (r->obtenerEstadistica(k,0)==menor){
+                texto.append("-Cedula: ");
+                texto.append(to_string(r->obtenerClave(k)));
+                texto.append(", Nombre del cliente: ");
+                texto.append(r->obtenerDato(k,0));
+                texto.append("\n");
+            }
+            reporteClienteQueMenosCompro(texto,r->obtenerRama(k),menor);
+        }
+    }
+}
+
+
 void ArbolB::listaCreciente()
 {
     inOrden(raiz);

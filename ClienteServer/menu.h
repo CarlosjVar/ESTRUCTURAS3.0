@@ -48,6 +48,11 @@ void reporteClientes();
 void reportePasilloMasVisitado ();
 void reportePasilloMenosVisitado ();
 void reporteProductosPasilloMasVendido ();
+void reporteMarcaMasVendida ();
+void reporteClienteQueMasCompro ();
+void reporteClienteQueMenosCompro ();
+void reporteInventario ();
+void reporteProductoPasillo ();
 signals:
     void enviart(qintptr*s,QByteArray data);
     void blockAll();

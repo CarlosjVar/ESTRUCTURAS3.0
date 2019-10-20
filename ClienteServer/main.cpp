@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     servidor.StartServer();
     supermercado.cargarPasillos("Pasillos.txt");
+    supermercado.PreordenI();
     supermercado.cargarProductos("ProductosPasillos.txt");
     supermercado.cargarMarcas("MarcasProductos.txt");
     clientes.cargarClientes("Clientes.txt");
@@ -26,7 +27,7 @@ int main(int argc, char *argv[])
     listaCiudades L1 = listaCiudades();
     L1.cargarCiudades("Ciudades.txt");
     inventario.cargarInventario("inventario.txt");
-    adminThread admin;
-    admin.start();
+   adminThread admin;
+   admin.start();
     return a.exec();
 }

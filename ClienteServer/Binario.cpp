@@ -18,6 +18,57 @@ pNodoBinarioAVL buscarNodoAVL(pNodoBinarioAVL pRaiz, int valor)
     return buscarNodoAVL(pRaiz->Hizq, valor);
 }
 
+void Binario::reporteMarcaMasVendidaBinario(string &texto){
+    int mayor = 0;
+    mayorCantidadDeVentas(this->raiz, mayor);
+    if (mayor==0){
+        texto.append("No se ha vendido ninguna marca aún");
+        return;
+    }
+    reporteMarcaMasVendidaBinario(texto, this->raiz,mayor);
+    return;
+}
+
+void Binario::reporteMarcaMasVendidaBinario(string &texto,pNodoBinario raiz,int &mayor){
+    if (raiz==NULL){
+        return;
+    }
+    reporteMarcaMasVendidaBinario(texto,raiz->Hder,mayor);
+    reporteMarcaMasVendidaBinario(texto,raiz->Hizq,mayor);
+    BinarioAVL temp = BinarioAVL();
+    temp.reporteMarcaMasVendidaAVL(texto,raiz->productos,mayor);
+}
+
+void BinarioAVL::reporteMarcaMasVendidaAVL(string &texto, pnodoAVL raiz, int &mayor){
+    if (raiz==NULL){
+        return;
+    }
+    reporteMarcaMasVendidaAVL(texto, raiz->Hder,mayor);
+    reporteMarcaMasVendidaAVL(texto, raiz->Hizq,mayor);
+    RBTree temp = RBTree (raiz->marcas);
+    temp.reporteMarcaMasVendida(texto,mayor);
+}
+
+
+void Binario::mayorCantidadDeVentas(pNodoBinario raiz, int &mayor){
+    if (raiz==NULL){
+        return;
+    }
+    mayorCantidadDeVentas(raiz->Hder,mayor);
+    mayorCantidadDeVentas(raiz->Hizq,mayor);
+    BinarioAVL temp = BinarioAVL();
+    temp.mayorCantidadDeVentasAVL(raiz->productos,mayor);
+}
+
+void BinarioAVL::mayorCantidadDeVentasAVL(pnodoAVL raiz, int &mayor){
+    if (raiz==NULL){
+        return;
+    }
+    mayorCantidadDeVentasAVL(raiz->Hder,mayor);
+    mayorCantidadDeVentasAVL(raiz->Hizq,mayor);
+    RBTree temp = RBTree (raiz->marcas);
+    temp.mayorCantidadDeVentasRN(mayor);
+}
 
 
 void Binario::reportePasilloMasVisitado(string &texto){
@@ -347,6 +398,25 @@ void BinarioAVL::cantidadMayorDeVentas(int &mayor, pNodoBinarioAVL raiz){
         }
     }
     return;
+}
+
+
+void BinarioAVL::reporteProductos(string &texto, pnodoAVL raiz){
+    if (raiz==NULL){
+        return;
+    }
+    else
+    {
+        reporteProductos(texto,raiz->Hder);
+        reporteProductos(texto,raiz->Hizq);
+        texto.append("-Codigo: ");
+        texto.append(to_string(raiz->valor));
+        texto.append(", Nombre de producto: ");
+        texto.append(raiz->nombre);
+        texto.append("\n");
+        return;
+
+    }
 }
 
 void BinarioAVL::reporteProductoMasVendido(string &texto, pNodoBinarioAVL raiz, int mayor){
