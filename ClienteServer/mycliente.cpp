@@ -298,8 +298,7 @@ void Mycliente::readyRead()
             while(aux!=nullptr)
             {
                 if(aux->cedula==std::to_string(cedula))
-                {
-                    std::cout<<aux->nombre<<std::endl;
+                {                    
                     nodoCompra*prod=aux->carrito->primero;
                     while(prod!=nullptr)
                     {
@@ -311,8 +310,9 @@ void Mycliente::readyRead()
                         prod=prod->siguiente;
                     }
                     aux->carrito->InsertarInicio(std::to_string(pasillo),std::to_string(productoi),std::to_string(marcaI),marca->nombre,cantidad);
-                    aux=aux->siguiente;
+
                 }
+                aux=aux->siguiente;
             }
         }
     }
@@ -333,7 +333,19 @@ int k;
 cliente=clientes.buscar(std::stoi(cedula),k);
 if (cliente!=nullptr)
 {
-    socket->write("LOS");
+    string sen="LOS";
+    clienodo client=colaclientes.primero;
+    while(client)
+    {
+        if(client->cedula==cedula)
+        {
+
+            sen.append("C");
+        }
+        client=client->siguiente;
+    }
+
+    socket->write(QByteArray::fromStdString(sen));
     PilaC*carrito=new PilaC;
     clienteslog.insertarFinal(cedula,cliente->obtenerDato(k,0),cliente->obtenerDato(k,1),cliente->obtenerDato(k,3),carrito,cliente->obtenerEstadistica(k,0),this->socket->socketDescriptor());
     cliente->cambiarEstadistica(k,0,cliente->obtenerEstadistica(k,0)+1);
@@ -360,7 +372,6 @@ void Mycliente::registrarCliente(QByteArray data)
     string numero=token;
     token=strtok(nullptr,separador);
     string correo=token;
-    cout<<cedula<<endl;
     cedula=cedula.substr(2,7);
     int cedulaS = std::stoi(cedula);
     int n;

@@ -44,6 +44,14 @@ void SocketTest::readyRead()
          if(data.toStdString().substr(2,1)=="S")
          {
            this->conectado=true;
+           if(data.toStdString().substr(3,1)=="C")
+           {
+               this->cola=true;
+           }
+           else
+           {
+               this->cola=false;
+           }
          }
          else
          {
